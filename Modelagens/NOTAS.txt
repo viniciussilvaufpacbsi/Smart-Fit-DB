@@ -1,0 +1,11 @@
+OBSERVAÇÃO:Este arquivo serve apenas como uma análise (opcional) dos DERs.Ele não é considerado essencial para a construção e nem para o funcionamento do sistema.
+
+A primeira modelagem representa a visão geral do sistema.
+
+Nela há detalhes ausentes como a falta do atributo "Usuario_ID" nas entidades "Cliente" e "Instrutor".
+
+Além disso,observa-se que não há o atributo "ID_Plano" na entidade "Plano_Exercicios" e nem um relacionamento entre ela e a entidade "Turma".
+
+A segunda modelagem corrige alguns desses problemas,mas ainda não conecta as entidades "Turma" e "Plano_Exercicios".
+
+A terceira modelagem é a mais completa e representa a versão mais atual do sistema.
