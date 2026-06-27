@@ -31,6 +31,30 @@
 ### Plano_Assinatura:Representa uma entidade forte independente dentro do sistema.
 ### Pagamento:Representa uma entidade fraca dependente de `Matricula`,`Plano_Assinatura` e `Cliente`.Ele sempre é gerado pleno `Plano_Assinatura`.
 
+## Relacionamentos
+
+### Academia -> Equipamento : 1:N
+
+### Academia -> Usuario : 1:N
+
+### Usuario -> Cliente : 1:1
+
+### Usuario -> Instrutor : 1:1
+
+### Cliente -> Turma : 1:N
+
+### Instrutor -> Turma: 1:N
+
+### Instrutor -> Plano_Exercicios : 1:N
+
+### Turma -> Plano_Exercicios : 1:N
+
+### Cliente -> Matricula : 1:1
+
+### Matricula -> Plano_Assinatura : 1:N
+
+### Matricula -> Pagamento : 1:1
+
 ## Decisões de Modelagem
 
 ### Usuário:A entidade foi definida para ser "Usuário" uma especialização por disjunção parcial.Escolheu-se tal abordagem devido a modelagem:não há um relacionamento entre a entidade fraca "Matricula" e a entidade forte "Instrutor" e por isso não escolheu-se a sobreposição parcial (já que seria necessário também relacionar tais entidades).Além disso,há uma possibilidade de um usuário não ser nem "Cliente" e nem "Instrutor".
@@ -43,7 +67,7 @@
 
 ### Primeira Migração
 
-```
+``` SQL
 ALTER TABLE Usuario ADD COLUMN Email_Usuario VARCHAR(100) UNIQUE NOT NULL;
 
 ALTER TABLE Cliente ADD COLUMN Turma_ID INT REFERENCES Turma(ID_Turma) ON DELETE RESTRICT;
@@ -56,7 +80,7 @@ ALTER TABLE Pagamento ADD COLUMN Matricula_ID INT REFERENCES Matricula(ID_Matric
 
 ### Segunda Migração
 
-```
+``` SQL
 CREATE TABLE Plano_Exercicios (
   ID_Plano SERIAL PRIMARY KEY,
   Tipo_Exercicio VARCHAR(200) NOT NULL,
@@ -71,7 +95,7 @@ CREATE TABLE Plano_Exercicios (
 
 ### Terceira Migração
 
-```
+``` SQL
 ALTER TABLE TURMA ADD CONSTRAINT Check_Turma_Turno CHECK(Turno IN ('Manhã','Tarde','Noite'));
 
 ALTER TABLE Plano_Assinatura ADD CONSTRAINT Check_Nome_Plano CHECK(Nome_Plano IN ('Smart','Fit','Black'));
@@ -89,7 +113,7 @@ ALTER TABLE Instrutor ADD CONSTRAINT Check_Especialidade_Instrutor CHECK (Especi
 
 ### Quarta Migração
 
-```
+``` SQL
 ALTER TABLE Plano_Exercicios RENAME COLUMN Tipo_Exercicio TO Modalidade_Exercicio;
 
 ALTER TABLE Plano_Exercicios RENAME COLUMN Periodo_Exercicio TO Duracao_Exercicio;
@@ -104,7 +128,7 @@ ALTER TABLE Plano_Exercicios ADD CONSTRAINT Check_Modalidade_Exercicio CHECK (Mo
 
 ### Quinta Migração
 
-```
+``` SQL
 ALTER TABLE Equipamento ADD CONSTRAINT Check_Preco_Equipamento CHECK (Valor_Equipamento > 0);
 
 ALTER TABLE Plano_Exercicios ADD CONSTRAINT Check_Quantidade_Exercicio CHECK (Quantidade_Exercicios > 0);
@@ -123,7 +147,7 @@ ALTER TABLE Pagamento ADD CONSTRAINT Check_Valor_Pagamento CHECK (Valor_Total > 
 
 ### Sexta Migração
 
-```
+``` SQL
 ALTER TABLE Academia DROP COLUMN Endereco_Academia;
 
 ALTER TABLE Academia ADD COLUMN Unidade_Federativa_Academia VARCHAR(2) NOT NULL;
@@ -140,7 +164,7 @@ ALTER TABLE Academia ADD COLUMN Rua_Academia VARCHAR(50) NOT NULL;
 
 ### Sétima Migração
 
-```
+``` SQL
 ALTER TABLE Cliente ADD CONSTRAINT Unique_Telefone_Cliente UNIQUE (Telefone_Contato);
 
 ALTER TABLE Instrutor ADD CONSTRAINT Unique_Telefone_Instrutor UNIQUE(Telefone_Contato);
