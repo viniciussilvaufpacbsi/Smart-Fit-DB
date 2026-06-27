@@ -1,7 +1,7 @@
 /*
 =================================================================================================================================================
                                                      O B S E R V A Ç Ã O
-Desculpem o equívoco,a mensagem de commit diz "Primeira Migração",mas na verdade esse arquivo não é a primeira migração mas sim a primeira versão.
+Desculpem o equívoco,a mensagem de commit dizia "Primeira Migração",mas na verdade esse arquivo não é a primeira migração mas sim a primeira versão.
 
 A primeira migração ocorre a partir do arquivo chamado de "smart-fit-versao-001.sql".
 
