@@ -1,5 +1,11 @@
 --                                      SEXTA MIGRAÇÃO
 
-ALTER TABLE Cliente ADD CONSTRAINT Unique_Telefone_Cliente UNIQUE (Telefone_Contato);
+ALTER TABLE Academia DROP COLUMN Endereco_Academia;
 
-ALTER TABLE Instrutor ADD CONSTRAINT Unique_Telefone_Instrutor UNIQUE(Telefone_Contato);
+ALTER TABLE Academia ADD COLUMN Unidade_Federativa_Academia VARCHAR(2) NOT NULL;
+
+ALTER TABLE Academia ADD COLUMN Cidade_Academia VARCHAR(50) NOT NULL;
+
+ALTER TABLE Academia ADD COLUMN Bairro_Academia VARCHAR(50) NOT NULL;
+
+ALTER TABLE Academia ADD COLUMN Rua_Academia VARCHAR(50) NOT NULL;
