@@ -33,27 +33,27 @@
 
 ## Relacionamentos
 
-### Academia -> Equipamento : 1:N
+### Academia -> Equipamento 1:N
 
-### Academia -> Usuario : 1:N
+### Academia -> Usuario 1:N
 
-### Usuario -> Cliente : 1:1
+### Usuario -> Cliente 1:1
 
-### Usuario -> Instrutor : 1:1
+### Usuario -> Instrutor 1:1
 
-### Cliente -> Turma : 1:N
+### Cliente -> Turma 1:N
 
-### Instrutor -> Turma: 1:N
+### Instrutor -> Turma 1:N
 
-### Instrutor -> Plano_Exercicios : 1:N
+### Instrutor -> Plano_Exercicios 1:N
 
-### Turma -> Plano_Exercicios : 1:N
+### Turma -> Plano_Exercicios 1:N
 
-### Cliente -> Matricula : 1:1
+### Cliente -> Matricula 1:1
 
-### Matricula -> Plano_Assinatura : 1:N
+### Matricula -> Plano_Assinatura 1:N
 
-### Matricula -> Pagamento : 1:1
+### Matricula -> Pagamento 1:1
 
 ## Decisões de Modelagem
 
