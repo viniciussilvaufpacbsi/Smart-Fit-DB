@@ -1,5 +1,4 @@
 --                                         TERCEIRA MIGRAÇÃO
-
 CREATE TABLE Plano_Exercicios (
   ID_Plano SERIAL PRIMARY KEY,
   Tipo_Exercicio VARCHAR(200) NOT NULL,
