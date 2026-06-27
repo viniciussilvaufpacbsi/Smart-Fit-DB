@@ -43,8 +43,6 @@
 
 ### Primeira Migração
 
-#### Código
-
 ```
 ALTER TABLE Usuario ADD COLUMN Email_Usuario VARCHAR(100) UNIQUE NOT NULL;
 
@@ -54,7 +52,99 @@ ALTER TABLE Pagamento ADD COLUMN Matricula_ID INT REFERENCES Matricula(ID_Matric
 
 ```
 
-#### Explicação:Percebeu-se a necessidade de adicionar colunas às tabelas `Usuario`,`Cliente` e `Pagamento` para atender à segunda modelagem.
+#### Percebeu-se a necessidade de adicionar colunas às tabelas `Usuario`,`Cliente` e `Pagamento` para atender à segunda modelagem.
 
+### Segunda Migração
 
+```
+CREATE TABLE Plano_Exercicios (
+  ID_Plano SERIAL PRIMARY KEY,
+  Tipo_Exercicio VARCHAR(200) NOT NULL,
+  Quantidade_Exercicios INT NOT NULL,
+  Periodo_Exercicios VARCHAR(20) NOT NULL,
+  Turma_ID INT REFERENCES Turma(ID_Turma) ON DELETE CASCADE,
+  Instrutor_ID VARCHAR(6) REFERENCES Instrutor(CREF) ON DELETE CASCADE
+);
+```
+
+#### Ela atende à necessidade da segunda modelagem,pois a primeira não apresentava o atributo `ID_Plano`.
+
+### Terceira Migração
+
+```
+ALTER TABLE TURMA ADD CONSTRAINT Check_Turma_Turno CHECK(Turno IN ('Manhã','Tarde','Noite'));
+
+ALTER TABLE Plano_Assinatura ADD CONSTRAINT Check_Nome_Plano CHECK(Nome_Plano IN ('Smart','Fit','Black'));
+
+ALTER TABLE Pagamento ADD CONSTRAINT Check_Forma_Pagamento CHECK(Forma_Pagamento IN ('Dinheiro','Pix','Crédito','Débito'));
+
+ALTER TABLE Instrutor ADD CONSTRAINT Check_Especialidade_Instrutor CHECK (Especialidade IN (
+'Yoga','Pilates','Spinning','Zumba',
+'Musculação','Hipertrofia','Emagrecimento','Fortalecimento','Condicionamento','Alongamento e Flexibilidade',
+'Karatê','Jiu-jitsu','Capoeira','Kung Fu','Taekwondo'));
+
+```
+
+#### Inferiu-se a necessidade de adicionar informações que aumentassem a fidelidade do Smart-Fit-DB em relação à Smart Fit.
+
+### Quarta Migração
+
+```
+ALTER TABLE Plano_Exercicios RENAME COLUMN Tipo_Exercicio TO Modalidade_Exercicio;
+
+ALTER TABLE Plano_Exercicios RENAME COLUMN Periodo_Exercicio TO Duracao_Exercicio;
+
+ALTER TABLE Plano_Exercicios ADD CONSTRAINT Check_Modalidade_Exercicio CHECK (Modalidade_Exercicio IN (
+ 'FITDANCE','ZUMBA','BODY COMBAT','BODY BALANCE','SMART CORE',
+ 'ALONGAMENTO','SMART FIGHT','SMART BIKE'));
+
+```
+
+#### Refatorou-se as colunas `Tipo_Exercicio` e `Periodo_Exercicio` de `Plano_Exercicios`,para que elas fiquem mais fiéis em relação ao sistema da Smart Fit.
+
+### Quinta Migração
+
+```
+ALTER TABLE Equipamento ADD CONSTRAINT Check_Preco_Equipamento CHECK (Valor_Equipamento > 0);
+
+ALTER TABLE Plano_Exercicios ADD CONSTRAINT Check_Quantidade_Exercicio CHECK (Quantidade_Exercicios > 0);
+
+ALTER TABLE Plano_Assinatura ADD CONSTRAINT Check_Vencimento_Plano CHECK (Data_Vencimento > CURRENT_DATE);
+
+ALTER TABLE Plano_Assinatura ADD CONSTRAINT Check_Valor_Plano CHECK (Valor_Plano > 0);
+
+ALTER TABLE Pagamento ADD CONSTRAINT Check_Data_Pagamento CHECK (Data_Pagamento > CURRENT_DATE);
+
+ALTER TABLE Pagamento ADD CONSTRAINT Check_Valor_Pagamento CHECK (Valor_Total > 0);
+
+```
+
+#### Acrescentou-se restrições a fim de evitar possíveis erros de inserções.
+
+### Sexta Migração
+
+```
+ALTER TABLE Academia DROP COLUMN Endereco_Academia;
+
+ALTER TABLE Academia ADD COLUMN Unidade_Federativa_Academia VARCHAR(2) NOT NULL;
+
+ALTER TABLE Academia ADD COLUMN Cidade_Academia VARCHAR(50) NOT NULL;
+
+ALTER TABLE Academia ADD COLUMN Bairro_Academia VARCHAR(50) NOT NULL;
+
+ALTER TABLE Academia ADD COLUMN Rua_Academia VARCHAR(50) NOT NULL;
+
+```
+
+#### Eliminou-se o atributo composto `Endereco_Academia` a fim de normalizar a tabela `Academia`
+
+### Sétima Migração
+
+```
+ALTER TABLE Cliente ADD CONSTRAINT Unique_Telefone_Cliente UNIQUE (Telefone_Contato);
+
+ALTER TABLE Instrutor ADD CONSTRAINT Unique_Telefone_Instrutor UNIQUE(Telefone_Contato);
+```
+
+#### Refatorou-se o campo `Telefone_Contato` de `Cliente` e `Instrutor` para evitar inserções repetidas.
 
