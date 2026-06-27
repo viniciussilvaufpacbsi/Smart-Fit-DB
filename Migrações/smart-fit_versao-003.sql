@@ -1,9 +1,13 @@
 --                                         TERCEIRA MIGRAÇÃO
-CREATE TABLE Plano_Exercicios (
-  ID_Plano SERIAL PRIMARY KEY,
-  Tipo_Exercicio VARCHAR(200) NOT NULL,
-  Quantidade_Exercicios INT NOT NULL,
-  Periodo_Exercicios VARCHAR(20) NOT NULL,
-  Turma_ID INT REFERENCES Turma(ID_Turma) ON DELETE CASCADE,
-  Instrutor_ID VARCHAR(6) REFERENCES Instrutor(CREF) ON DELETE CASCADE
-);
+ALTER TABLE TURMA ADD CONSTRAINT Check_Turma_Turno CHECK(Turno IN ('Manhã','Tarde','Noite'));
+
+ALTER TABLE Plano_Assinatura ADD CONSTRAINT Check_Nome_Plano CHECK(Nome_Plano IN ('Smart','Fit','Black'));
+
+ALTER TABLE Pagamento ADD CONSTRAINT Check_Forma_Pagamento CHECK(Forma_Pagamento IN ('Dinheiro','Pix','Crédito','Débito'));
+
+ALTER TABLE Plano_Exercicios ADD CONSTRAINT Check_Quantidade_Exercicio CHECK (Quantidade_Exercicios > 0);
+
+ALTER TABLE Instrutor ADD CONSTRAINT Check_Especialidade_Instrutor CHECK (Especialidade IN (
+'Yoga','Pilates','Spinning','Zumba',
+'Musculação','Hipertrofia','Emagrecimento','Fortalecimento','Condicionamento','Alongamento e Flexibilidade',
+'Karatê','Jiu-jitsu','Capoeira','Kung Fu','Taekwondo'));
