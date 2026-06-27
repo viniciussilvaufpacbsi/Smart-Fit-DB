@@ -1,11 +1,13 @@
 --                                       QUINTA MIGRAÇÃO
 
-ALTER TABLE Academia DROP COLUMN Endereco_Academia;
+ALTER TABLE Equipamento ADD CONSTRAINT Check_Preco_Equipamento CHECK (Valor_Equipamento > 0);
 
-ALTER TABLE Academia ADD COLUMN Unidade_Federativa_Academia VARCHAR(2) NOT NULL;
+ALTER TABLE Plano_Exercicios ADD CONSTRAINT Check_Quantidade_Exercicio CHECK (Quantidade_Exercicios > 0);
 
-ALTER TABLE Academia ADD COLUMN Cidade_Academia VARCHAR(50) NOT NULL;
+ALTER TABLE Plano_Assinatura ADD CONSTRAINT Check_Vencimento_Plano CHECK (Data_Vencimento > CURRENT_DATE);
 
-ALTER TABLE Academia ADD COLUMN Bairro_Academia VARCHAR(50) NOT NULL;
+ALTER TABLE Plano_Assinatura ADD CONSTRAINT Check_Valor_Plano CHECK (Valor_Plano > 0);
 
-ALTER TABLE Academia ADD COLUMN Rua_Academia VARCHAR(50) NOT NULL;
+ALTER TABLE Pagamento ADD CONSTRAINT Check_Data_Pagamento CHECK (Data_Pagamento > CURRENT_DATE);
+
+ALTER TABLE Pagamento ADD CONSTRAINT Check_Valor_Pagamento CHECK (Valor_Total > 0);
