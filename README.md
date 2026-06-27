@@ -13,8 +13,8 @@
 # A Modelagem
 ## Uma Breve Descrição:Os DERs foram desenvolvidos utilizando a ferramenta BR Modelo Web.Cada versão representa um estágio do sistema,o qual é evoluído de forma incremental.
 ## Decisões de Modelagem
-### Usuário:A entidade "Usuário" é uma especialização por disjunção parcial.Escolheu-se tal abordagem por ser mais simples.Além disso,há uma possibilidade de que um usuário não seja nem "Cliente" e nem "Instrutor".
-### Academia:A entidade "Academia" representa um franqueado da rede e por isso foi incluída.
+### Usuário:A entidade "Usuário" é uma especialização por disjunção parcial.Escolheu-se tal abordagem por ser mais simples.Além disso,há uma possibilidade de que um usuário não seja nem "Cliente" e nem "Instrutor".Não obstante,não há um relacionamento entre a entidade fraca "Matricula" e a entidade forte "Instrutor" e por isso não escolheu-se a sobreposição parcial (já que seria necessário também relacionar tais entidades).
+### Academia:A Smart-Fit-DB representa um sistema capaz de gerenciar múltiplas unidades (franqueados).Cada unidade precisa ter atributos referentes ao registro(CNPJ),endereço e formas de contato.
 
 # As Migrações
 ## Informações:O arquivo chamado de "smart-fit_versao-000.sql" representa a primeira versão do sistema.Ele não é uma migração.Cada versão incrementada após ele é uma migração.
@@ -22,5 +22,3 @@
 
 # Funcionamento do Sistema
 ## Execução:Para rodar o schema e as suas migrações,vá no DB-Fiddle,selecione a última versão do PostgreSQL,copie e cole todos os códigos e execute-os.
-
-# Perspectiva do Sistema:O Smart-Fit-DB é só um simples exercício acadêmico.Ainda falta framework,dockerfile e padrões de segurança contra SQL Injection.
