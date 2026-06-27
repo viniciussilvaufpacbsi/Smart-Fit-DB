@@ -1,9 +1,11 @@
-OBSERVAÇÃO 1:Este arquivo serve apenas como uma análise (opcional) dos DERs.Ele não é considerado essencial para a construção e nem para o funcionamento do sistema.
+OBSERVAÇÃO 1:Este arquivo serve apenas como uma análise dos DERs.
 
 OBSERVAÇÃO 2:O diretório Modelagens só foi criado para demonstrar a evolução incremental do Smart-Fit-DB.Além disso,o intuito desse arquivo não é explicar decisões de modelagem,relacionamentos ou restrições.
 
-DER 1:A primeira modelagem representa a visão geral do sistema.Nela há detalhes ausentes como a falta do atributo "Usuario_ID" nas entidades "Cliente" e "Instrutor".Além disso,observa-se que não há o atributo "ID_Plano" na entidade "Plano_Exercicios",nem um relacionamento entre ela e a entidade "Turma".
+DER 1:A primeira modelagem representa a visão geral do sistema.Nela há detalhes ausentes como a falta do atributo "Usuario_ID" nas entidades "Cliente" e "Instrutor".Além disso,observa-se que não há o atributo "ID_Plano" na entidade "Plano_Exercicios",nem um relacionamento entre ela e a entidade "Turma".Não obstante,há questões pendentes a respeito de atributos compostos e multivalorados como "Endereco_Academia" e "Telefone_Contato".Por fim,há uma ausência do atributo "Academia_ID" na entidade "Equipamento".
 
-DER 2:A segunda modelagem adiciona esses atributos,mas ainda não apresenta o relacionamento entre as entidades "Turma" e "Plano_Exercicios".
+DER 2:A segunda modelagem adiciona o atributo "Usuario_ID" em "Cliente" e "Instrutor",como também o atributo "ID_Plano" em "Plano_Exercicios".Porém,ela não apresenta o relacionamento entre as entidades "Turma" e "Plano_Exercicios" e nem trata a respeito de uma normalização a respeito dos atributos compostos e multivalorados.
 
-DER 3:A terceira modelagem apresenta todos os atributos do sistema e é a mais completa.
+DER 3:A terceira modelagem apresenta o relacionamento entre "Turma" e "Plano_Exercicios",porém não resolve as questões de atributos compostos e multivalorados e nem adiciona o atributo "Academia_ID" em "Equipamento".
+
+DER 4:A quarta modelagem resolve todas as questões.Ela adiciona os atributos:"Unidade_Federativa_Academia","Cidade_Academia","Bairro_Academia" e "Rua_Academia" no lugar de "Endereco_Academia".Tais mudanças foram aplicadas para normalizar o sistema.Por fim,ela adiciona o atributo "Academia_ID" em "Equipamento" pois é necessário saber qual academia um determinado equipamento pertence.
