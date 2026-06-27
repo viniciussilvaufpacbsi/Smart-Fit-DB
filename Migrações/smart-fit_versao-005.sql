@@ -1,0 +1,11 @@
+--                                       QUINTA MIGRAÇÃO
+
+ALTER TABLE Academia DROP COLUMN Endereco_Academia;
+
+ALTER TABLE Academia ADD COLUMN Unidade_Federativa_Academia VARCHAR(2) NOT NULL;
+
+ALTER TABLE Academia ADD COLUMN Cidade_Academia VARCHAR(50) NOT NULL;
+
+ALTER TABLE Academia ADD COLUMN Bairro_Academia VARCHAR(50) NOT NULL;
+
+ALTER TABLE Academia ADD COLUMN Rua_Academia VARCHAR(50) NOT NULL;
