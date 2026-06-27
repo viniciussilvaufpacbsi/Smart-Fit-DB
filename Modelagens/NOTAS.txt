@@ -8,4 +8,4 @@ DER 2:A segunda modelagem adiciona o atributo "Usuario_ID" em "Cliente" e "Instr
 
 DER 3:A terceira modelagem apresenta o relacionamento entre "Turma" e "Plano_Exercicios",porém não resolve as questões de atributos compostos e multivalorados e nem adiciona o atributo "Academia_ID" em "Equipamento".
 
-DER 4:A quarta modelagem resolve todas as questões.Ela adiciona os atributos:"Unidade_Federativa_Academia","Cidade_Academia","Bairro_Academia" e "Rua_Academia" no lugar de "Endereco_Academia".Tais mudanças foram aplicadas para normalizar o sistema.Por fim,ela adiciona o atributo "Academia_ID" em "Equipamento" pois é necessário saber qual academia um determinado equipamento pertence.
+DER 4:A quarta modelagem resolve todas as questões.Ela adiciona os atributos:"Unidade_Federativa_Academia","Cidade_Academia","Bairro_Academia" e "Rua_Academia" no lugar de "Endereco_Academia".Por fim,ela adiciona o atributo "Academia_ID" em "Equipamento".
