@@ -115,7 +115,7 @@ ALTER TABLE Plano_Exercicios ADD CONSTRAINT Check_Modalidade_Exercicio CHECK (Mo
 
 ```
 
-#### Esta migração acrescenta restrições à coluna `Modalidade_Exercicio` para se manter mais fíel à Smart Fit.
+#### Esta migração acrescenta restrições à coluna `Modalidade_Exercicio` para torna-se mais fíel à Smart Fit.
 
 ### Quinta Migração
 
@@ -151,7 +151,7 @@ ALTER TABLE Academia ADD COLUMN Rua_Academia VARCHAR(50) NOT NULL;
 
 ```
 
-#### Esta migração corresponde à terceira modelagem e elimina o atributo composto `Endereco_Academia` a fim de normalizar a tabela `Academia`
+#### Esta migração corresponde à terceira modelagem e elimina o atributo composto `Endereco_Academia` a fim de normalizar a tabela `Academia`.
 
 ### Sétima Migração
 
@@ -163,3 +163,12 @@ ALTER TABLE Instrutor ADD CONSTRAINT Unique_Telefone_Instrutor UNIQUE(Telefone_C
 
 #### Esta migração refatora o campo `Telefone_Contato` de `Cliente` e `Instrutor` a fim de evitar inserções repetidas.
 
+### Oitava Migração
+
+``` SQL
+ALTER TABLE Equipamento ADD COLUMN Academia_ID VARCHAR(14) REFERENCES Academia(CNPJ);
+
+ALTER TABLE Cliente DROP COLUMN Turma_ID;
+````
+
+### Esta migração corresponde à quarta modelagem.Ela adiciona o atributo `Academia_ID` à tabela `Equipamento`,a fim de facilitar consultas de junção envolvendo as tabelas `Academia` e `Equipamento`,e remove o atributo `Turma_ID` da tabela `Cliente`,para que possa seguir a cardinalidade do relacionamento.
