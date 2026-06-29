@@ -65,6 +65,7 @@ CREATE TABLE Equipamento (
 );
 
 CREATE TABLE Plano_Exercicios (
+  ID_Plano SERIAL PRIMARY KEY,
   Tipo_Exercicio VARCHAR(200) NOT NULL,
   Quantidade_Exercicios INT NOT NULL,
   Periodo_Exercicios VARCHAR(20) NOT NULL
