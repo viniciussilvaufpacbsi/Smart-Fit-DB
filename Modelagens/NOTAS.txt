@@ -1,11 +1,15 @@
-OBSERVAÇÃO 1:Este arquivo serve apenas como uma análise dos DERs.
+OBSERVAÇÃO:Este arquivo serve apenas explicar as mudanças dos DERs.Esse arquivo não explica decisões de modelagem,relacionamentos ou restrições.
 
-OBSERVAÇÃO 2:O diretório Modelagens só foi criado para demonstrar a evolução incremental do Smart-Fit-DB.Além disso,o intuito desse arquivo não é explicar decisões de modelagem,relacionamentos ou restrições.
+Academia-DB-1:Representa a visão geral do sistema.Nela,observa-se a escolha inicial de aplicar especialização por sobreposição parcial na entidade `Usuario`.
 
-DER 1:A primeira modelagem representa a visão geral do sistema.Nela há detalhes ausentes como a falta do atributo "Usuario_ID" nas entidades "Cliente" e "Instrutor".Além disso,observa-se que não há o atributo "ID_Plano" na entidade "Plano_Exercicios",nem um relacionamento entre ela e a entidade "Turma".Não obstante,há questões pendentes a respeito de atributos compostos e multivalorados como "Endereco_Academia" e "Telefone_Contato".Por fim,há uma ausência do atributo "Academia_ID" na entidade "Equipamento".
+Academia-DB-2:
 
-DER 2:A segunda modelagem adiciona o atributo "Usuario_ID" em "Cliente" e "Instrutor",como também o atributo "ID_Plano" em "Plano_Exercicios".Porém,ela não apresenta o relacionamento entre as entidades "Turma" e "Plano_Exercicios" e nem trata a respeito de uma normalização a respeito dos atributos compostos e multivalorados.
+**Adições**:`Turma_ID` em `Cliente`;`Instrutor_ID` e `Turma_ID` em Plano_Exercicios`;`Matricula_ID` em `Pagamento`;`Email_Usuario` em `Usuario`.
 
-DER 3:A terceira modelagem apresenta o relacionamento entre "Turma" e "Plano_Exercicios",porém não resolve as questões de atributos compostos e multivalorados e nem adiciona o atributo "Academia_ID" em "Equipamento".
+**Modificações**:Altera a especialização para disjunção parcial;Renomeia `Periodo_Exercicio` para `Duracao_Exercicio` e `Tipo_Exercicio` para `Modalidade_Exercicio`.
 
-DER 4:A quarta modelagem resolve todas as questões.Ela adiciona os atributos:"Unidade_Federativa_Academia","Cidade_Academia","Bairro_Academia" e "Rua_Academia" no lugar de "Endereco_Academia".Por fim,ela adiciona o atributo "Academia_ID" em "Equipamento".
+Academia-DB-3:
+
+**Adições**:`Academia_ID` em `Equipamento`;`Unidade_Federativa_Academia,Cidade_Academia,Bairro_Academia,Rua_Academia` em `Academia`
+
+**Remoções**:`Endereco_Academia` de `Academia`
