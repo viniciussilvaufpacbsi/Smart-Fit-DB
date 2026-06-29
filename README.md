@@ -83,7 +83,7 @@ ALTER TABLE Plano_Exercicios ADD COLUMN Turma_ID INT REFERENCES Turma(ID_Turma) 
 ### Segunda Migração
 
 ``` SQL
-ALTER TABLE Plano_Exercicios RENAME COLUMN Periodo_Exercicio TO Duracao_Exercicio;
+ALTER TABLE Plano_Exercicios RENAME COLUMN Periodo_Exercicios TO Duracao_Exercicio;
 
 ALTER TABLE Plano_Exercicios RENAME COLUMN Tipo_Exercicio TO Modalidade_Exercicio;
 ```
