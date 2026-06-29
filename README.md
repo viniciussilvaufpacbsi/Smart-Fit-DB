@@ -10,9 +10,9 @@
 
 ## Nome do Sistema:Smart-Fit-DB
 
-## Descrição do Sistema:O Smart-Fit-DB é um banco de dados relacional desenvolvido para PostgreSQL a fim de simular um schema semelhante ao da rede de academias Smart Fit.Nele,cada usuário pode se cadastrar como um cliente ou um instrutor,realizando tarefas diferentes.Todo cliente precisa realizar uma matrícula e assinar um plano de serviço,o qual oferece três opções:Smart,Fit e Black.Além disso,todo cliente precisa participar de uma turma,a qual é determinada pelos exercícios que precisa fazer.Todo instrutor é responsável por uma turma de acordo com a sua especialidade e cada turma precisa seguir um plano de exercícios.Um plano de exercícios é determinado por um instrutor e está associado a uma única turma.Além disso,os planos de exercícios possuem uma determinada duração e estão associados com uma modalidade.
+## Descrição do Sistema:O Smart-Fit-DB é um banco de dados relacional desenvolvido para PostgreSQL a fim de simular um schema semelhante ao da rede de academias Smart Fit.Nele,cada usuário pode se cadastrar como um cliente ou um instrutor,desempenhando papéis diferentes.Todo cliente precisa realizar uma matrícula e assinar um plano que oferece três opções:Smart,Fit e Black.Além disso,os clientes precisam participar de uma turma,a qual é determinada de acordo com os exercícios que eles precisam fazer.Todo instrutor é responsável por uma turma de acordo com a sua especialidade e cada turma precisa seguir um plano de exercícios.Cada plano de exercícios é determinado por um instrutor e está associado a uma única turma.Além disso,os planos de exercícios possuem uma determinada duração e estão associados a uma modalidade.
 
-## Objetivo do Sistema:O objetivo do Smart-Fit-DB é de ser apenas um exercício acadêmico de modelagem.Não há nenhuma intenção comercial e todas as semelhanças são apenas para seguir o propósito de simular o modelo de dados da forma mais fiél possível,sem violar os direitos autorais da Smart Fit. 
+## Objetivo do Sistema:O objetivo do Smart-Fit-DB é de ser apenas um exercício acadêmico.Não há nenhuma intenção comercial e todas as semelhanças são apenas para seguir o propósito de simular o modelo de dados da forma mais fiél possível,sem violar os direitos autorais da Smart Fit. 
 
 # A Modelagem
 
@@ -74,17 +74,23 @@ ALTER TABLE Cliente ADD COLUMN Turma_ID INT REFERENCES Turma(ID_Turma) ON DELETE
 
 ALTER TABLE Pagamento ADD COLUMN Matricula_ID INT REFERENCES Matricula(ID_Matricula) ON DELETE CASCADE;
 
+ALTER TABLE Plano_Exercicios ADD COLUMN Instrutor_ID VARCHAR(6) REFERENCES Instrutor(CREF) ON DELETE CASCADE;
+
+ALTER TABLE Plano_Exercicios ADD COLUMN Turma_ID INT REFERENCES Turma(ID_Turma) ON DELETE CASCADE;
+
 ```
 
-#### Esta migração acrescenta as colunas `Email_Usuario`,`Turma_ID` e `Matricula_ID` nas tabelas `Usuario`,`Cliente` e `Pagamento`.
+#### Esta migração corresponde à segunda modelagem e acrescenta as colunas `Email_Usuario`,`Turma_ID` e `Matricula_ID` às tabelas `Usuario`,`Cliente` e `Pagamento`.
 
 ### Segunda Migração
 
 ``` SQL
+ALTER TABLE Plano_Exercicios RENAME COLUMN Periodo_Exercicio TO Duracao_Exercicio;
 
+ALTER TABLE Plano_Exercicios RENAME COLUMN Tipo_Exercicio TO Modalidade_Exercicio;
 ```
 
-#### 
+#### Esta migração corresponde à segunda modelagem e altera o nome das colunas da tabela `Plano_Exercicios` a fim de se manter mais fíel em relação a Smart Fit.
 
 ### Terceira Migração
 
@@ -96,9 +102,9 @@ ALTER TABLE Plano_Assinatura ADD CONSTRAINT Check_Nome_Plano CHECK(Nome_Plano IN
 ALTER TABLE Pagamento ADD CONSTRAINT Check_Forma_Pagamento CHECK(Forma_Pagamento IN ('Dinheiro','Pix','Crédito','Débito'));
 
 ALTER TABLE Instrutor ADD CONSTRAINT Check_Especialidade_Instrutor CHECK (Especialidade IN (
-'Yoga','Pilates','Spinning','Zumba',
-'Musculação','Hipertrofia','Emagrecimento','Fortalecimento','Condicionamento','Alongamento e Flexibilidade',
-'Karatê','Jiu-jitsu','Capoeira','Kung Fu','Taekwondo'));
+ 'Yoga','Pilates','Spinning','Zumba',
+ 'Musculação','Hipertrofia','Emagrecimento','Fortalecimento','Condicionamento','Alongamento e Flexibilidade',
+ 'Karatê','Jiu-jitsu','Capoeira','Kung Fu','Taekwondo'));
 
 ```
 
@@ -107,17 +113,13 @@ ALTER TABLE Instrutor ADD CONSTRAINT Check_Especialidade_Instrutor CHECK (Especi
 ### Quarta Migração
 
 ``` SQL
-ALTER TABLE Plano_Exercicios RENAME COLUMN Tipo_Exercicio TO Modalidade_Exercicio;
-
-ALTER TABLE Plano_Exercicios RENAME COLUMN Periodo_Exercicio TO Duracao_Exercicio;
-
 ALTER TABLE Plano_Exercicios ADD CONSTRAINT Check_Modalidade_Exercicio CHECK (Modalidade_Exercicio IN (
  'FITDANCE','ZUMBA','BODY COMBAT','BODY BALANCE','SMART CORE',
  'ALONGAMENTO','SMART FIGHT','SMART BIKE'));
 
 ```
 
-#### Esta migração refatorou as colunas `Tipo_Exercicio` e `Periodo_Exercicio` de `Plano_Exercicios` para ficarem mais fiéis a Smart Fit.
+#### Esta migração acrescenta restrições à coluna `Modalidade_Exercicio` para se manter mais fíel à Smart Fit.
 
 ### Quinta Migração
 
@@ -136,7 +138,7 @@ ALTER TABLE Pagamento ADD CONSTRAINT Check_Valor_Pagamento CHECK (Valor_Total > 
 
 ```
 
-#### Esta migração adicionou restrições a fim de evitar possíveis erros de inserções.
+#### Esta migração adiciona restrições a fim de evitar possíveis erros de inserções.
 
 ### Sexta Migração
 
@@ -153,7 +155,7 @@ ALTER TABLE Academia ADD COLUMN Rua_Academia VARCHAR(50) NOT NULL;
 
 ```
 
-#### Esta migração eliminou o atributo composto `Endereco_Academia` a fim de normalizar a tabela `Academia`
+#### Esta migração corresponde à terceira modelagem e elimina o atributo composto `Endereco_Academia` a fim de normalizar a tabela `Academia`
 
 ### Sétima Migração
 
@@ -163,5 +165,5 @@ ALTER TABLE Cliente ADD CONSTRAINT Unique_Telefone_Cliente UNIQUE (Telefone_Cont
 ALTER TABLE Instrutor ADD CONSTRAINT Unique_Telefone_Instrutor UNIQUE(Telefone_Contato);
 ```
 
-#### Esta migração refatorou o campo `Telefone_Contato` de `Cliente` e `Instrutor` a fim de evitar inserções repetidas.
+#### Esta migração refatora o campo `Telefone_Contato` de `Cliente` e `Instrutor` a fim de evitar inserções repetidas.
 
