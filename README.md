@@ -55,9 +55,11 @@
 
 ### Usuário:A entidade foi definida para ser uma especialização por disjunção parcial.Escolheu-se tal abordagem para corresponder às modelagens:não há um relacionamento entre `Matricula` e `Instrutor` e por isso a sobreposição parcial não foi escolhida.Além disso,há uma possibilidade de um usuário não ser nem `Cliente` e nem `Instrutor`.
 
-### Academia:A Smart-Fit-DB representa um sistema capaz de gerenciar múltiplas unidades (franqueados).Cada unidade precisa ter atributos referentes ao registro(CNPJ),endereço e formas de contato.
+### Academia:O Smart-Fit-DB representa um sistema capaz de gerenciar múltiplas unidades,cada uma com atributos referentes ao registro(CNPJ),endereço e formas de contato.
 
-### Pagamento:A Smart-Fit-DB é um sistema que simula transações financeiras.Devido a todo cliente se matricular e assinar um plano,é necessário que haja uma entidade que represente essas transações:cada matrícula e assinatura são mensais e precisam ser representadas como faturas.
+### Pagamento:O Smart-Fit-DB é um sistema que simula transações financeiras.Devido a todo cliente se matricular e assinar um plano,é necessário que haja uma entidade que represente essas transações:cada matrícula e assinatura são mensais e precisam ser representadas como faturas.
+
+### Turma:No Smart-Fit-DB múltiplos clientes podem estar em múltiplas turmas,e cada turma só pode ter um único instrutor.Essa decisão foi feita pra organizar os dados de uma forma mais concisa,pois a entidade `Turma` no DER possuí um atributo identificador de um `Instrutor`,mas não de um cliente.Isso implica que deve haver uma tabela `Cliente_Turma` no Smart-Fit-DB.
 
 # Migrações
 
