@@ -13,3 +13,5 @@ OBSERVAÇÃO:Este arquivo serve apenas explicar as mudanças dos DERs.Esse arqui
 *Adições*:`Academia_ID` em `Equipamento`;`Unidade_Federativa_Academia,Cidade_Academia,Bairro_Academia,Rua_Academia` em `Academia`
 
 *Remoções*:`Endereco_Academia` de `Academia`
+
+**Academia-DB-4**:Ajusta os relacionamentos nas entidades `Cliente,Matricula,Instrutor,Turma` e `Plano_Exercicios`.
