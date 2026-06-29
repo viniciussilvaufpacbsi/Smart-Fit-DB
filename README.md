@@ -37,11 +37,7 @@
 
 ### Academia -> Usuario 1:N
 
-### Usuario -> Cliente 1:N
-
-### Usuario -> Instrutor 1:N
-
-### Cliente -> Turma 1:N
+### Cliente -> Turma N:N
 
 ### Instrutor -> Turma 1:N
 
