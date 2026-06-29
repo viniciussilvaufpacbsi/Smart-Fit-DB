@@ -76,22 +76,15 @@ ALTER TABLE Pagamento ADD COLUMN Matricula_ID INT REFERENCES Matricula(ID_Matric
 
 ```
 
-#### Esta migração corresponde à segunda modelagem acrescenta as colunas `Email_Usuario`,`Turma_ID` e `Matricula_ID` nas tabelas `Usuario`,`Cliente` e `Pagamento`.
+#### Esta migração acrescenta as colunas `Email_Usuario`,`Turma_ID` e `Matricula_ID` nas tabelas `Usuario`,`Cliente` e `Pagamento`.
 
 ### Segunda Migração
 
 ``` SQL
-CREATE TABLE Plano_Exercicios (
-  ID_Plano SERIAL PRIMARY KEY,
-  Tipo_Exercicio VARCHAR(200) NOT NULL,
-  Quantidade_Exercicios INT NOT NULL,
-  Periodo_Exercicios VARCHAR(20) NOT NULL,
-  Turma_ID INT REFERENCES Turma(ID_Turma) ON DELETE CASCADE,
-  Instrutor_ID VARCHAR(6) REFERENCES Instrutor(CREF) ON DELETE CASCADE
-);
+
 ```
 
-#### Esta migração corresponde à segunda modelagem pois a primeira não apresenta o atributo `ID_Plano`.
+#### 
 
 ### Terceira Migração
 
