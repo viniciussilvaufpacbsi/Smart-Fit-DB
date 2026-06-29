@@ -37,9 +37,9 @@
 
 ### Academia -> Usuario 1:N
 
-### Usuario -> Cliente 1:1
+### Usuario -> Cliente 1:N
 
-### Usuario -> Instrutor 1:1
+### Usuario -> Instrutor 1:N
 
 ### Cliente -> Turma 1:N
 
@@ -57,7 +57,7 @@
 
 ## Decisões de Modelagem
 
-### Usuário:A entidade foi definida para ser "Usuário" uma especialização por disjunção parcial.Escolheu-se tal abordagem devido a modelagem:não há um relacionamento entre a entidade fraca "Matricula" e a entidade forte "Instrutor" e por isso não escolheu-se a sobreposição parcial (já que seria necessário também relacionar tais entidades).Além disso,há uma possibilidade de um usuário não ser nem "Cliente" e nem "Instrutor".
+### Usuário:A entidade foi definida para ser uma especialização por disjunção parcial.Escolheu-se tal abordagem para corresponder às modelagens:não há um relacionamento entre `Matricula` e `Instrutor` e por isso a sobreposição parcial não foi escolhida.Além disso,há uma possibilidade de um usuário não ser nem `Cliente` e nem `Instrutor`.
 
 ### Academia:A Smart-Fit-DB representa um sistema capaz de gerenciar múltiplas unidades (franqueados).Cada unidade precisa ter atributos referentes ao registro(CNPJ),endereço e formas de contato.
 
@@ -76,7 +76,7 @@ ALTER TABLE Pagamento ADD COLUMN Matricula_ID INT REFERENCES Matricula(ID_Matric
 
 ```
 
-#### Percebeu-se a necessidade de adicionar colunas às tabelas `Usuario`,`Cliente` e `Pagamento` para atender à segunda modelagem.
+#### Esta migração corresponde à segunda modelagem acrescenta as colunas `Email_Usuario`,`Turma_ID` e `Matricula_ID` nas tabelas `Usuario`,`Cliente` e `Pagamento`.
 
 ### Segunda Migração
 
@@ -91,12 +91,12 @@ CREATE TABLE Plano_Exercicios (
 );
 ```
 
-#### Ela atende à necessidade da segunda modelagem,pois a primeira não apresentava o atributo `ID_Plano`.
+#### Esta migração corresponde à segunda modelagem pois a primeira não apresenta o atributo `ID_Plano`.
 
 ### Terceira Migração
 
 ``` SQL
-ALTER TABLE TURMA ADD CONSTRAINT Check_Turma_Turno CHECK(Turno IN ('Manhã','Tarde','Noite'));
+ALTER TABLE Turma ADD CONSTRAINT Check_Turma_Turno CHECK(Turno IN ('Manhã','Tarde','Noite'));
 
 ALTER TABLE Plano_Assinatura ADD CONSTRAINT Check_Nome_Plano CHECK(Nome_Plano IN ('Smart','Fit','Black'));
 
@@ -109,7 +109,7 @@ ALTER TABLE Instrutor ADD CONSTRAINT Check_Especialidade_Instrutor CHECK (Especi
 
 ```
 
-#### Inferiu-se a necessidade de adicionar informações que aumentassem a fidelidade do Smart-Fit-DB em relação à Smart Fit.
+#### Esta migração adiciona restrições nas tabelas `Turma,Plano_Assinatura,Pagamento` e `Instrutor` a fim de aumentar a fidelidade do Smart-Fit-DB em relação a Smart Fit.
 
 ### Quarta Migração
 
@@ -124,7 +124,7 @@ ALTER TABLE Plano_Exercicios ADD CONSTRAINT Check_Modalidade_Exercicio CHECK (Mo
 
 ```
 
-#### Refatorou-se as colunas `Tipo_Exercicio` e `Periodo_Exercicio` de `Plano_Exercicios`,para que elas fiquem mais fiéis em relação ao sistema da Smart Fit.
+#### Esta migração refatorou as colunas `Tipo_Exercicio` e `Periodo_Exercicio` de `Plano_Exercicios` para ficarem mais fiéis a Smart Fit.
 
 ### Quinta Migração
 
@@ -143,7 +143,7 @@ ALTER TABLE Pagamento ADD CONSTRAINT Check_Valor_Pagamento CHECK (Valor_Total > 
 
 ```
 
-#### Acrescentou-se restrições a fim de evitar possíveis erros de inserções.
+#### Esta migração adicionou restrições a fim de evitar possíveis erros de inserções.
 
 ### Sexta Migração
 
@@ -160,7 +160,7 @@ ALTER TABLE Academia ADD COLUMN Rua_Academia VARCHAR(50) NOT NULL;
 
 ```
 
-#### Eliminou-se o atributo composto `Endereco_Academia` a fim de normalizar a tabela `Academia`
+#### Esta migração eliminou o atributo composto `Endereco_Academia` a fim de normalizar a tabela `Academia`
 
 ### Sétima Migração
 
@@ -170,5 +170,5 @@ ALTER TABLE Cliente ADD CONSTRAINT Unique_Telefone_Cliente UNIQUE (Telefone_Cont
 ALTER TABLE Instrutor ADD CONSTRAINT Unique_Telefone_Instrutor UNIQUE(Telefone_Contato);
 ```
 
-#### Refatorou-se o campo `Telefone_Contato` de `Cliente` e `Instrutor` para evitar inserções repetidas.
+#### Esta migração refatorou o campo `Telefone_Contato` de `Cliente` e `Instrutor` a fim de evitar inserções repetidas.
 
