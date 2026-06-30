@@ -165,7 +165,7 @@ ALTER TABLE Instrutor ADD CONSTRAINT Unique_Telefone_Instrutor UNIQUE(Telefone_C
 
 ```
 
-#### Esta migração refatora o campo `Telefone_Contato` de `Cliente` e `Instrutor` a fim de evitar inserções repetidas.
+#### Esta migração refatora o campo `Telefone_Contato` de `Cliente` e `Instrutor` a fim de evitar redundâncias nos dados.
 
 ### Oitava Migração
 
@@ -178,4 +178,4 @@ ALTER TABLE Turma RENAME COLUMN Turno TO Turno_Turma;
 
 ````
 
-### Esta migração corresponde à quarta modelagem.Ela adiciona o atributo `Academia_ID` à tabela `Equipamento`,a fim de facilitar consultas de junção envolvendo as tabelas `Academia` e `Equipamento`,e remove o atributo `Turma_ID` da tabela `Cliente`,para que possa seguir a cardinalidade do relacionamento.
+### Esta migração corresponde à quarta modelagem.Ela adiciona o atributo `Academia_ID` à tabela `Equipamento`,a fim de facilitar consultas de junção envolvendo as tabelas `Academia` e `Equipamento`,e remove o atributo `Turma_ID` da tabela `Cliente` para que possa seguir a cardinalidade do relacionamento.Além disso,ela renomeia o atributo `Turno_Turma` da tabela `Turma`.
