@@ -86,6 +86,7 @@ ALTER TABLE Plano_Exercicios ADD COLUMN Turma_ID INT REFERENCES Turma(ID_Turma) 
 ALTER TABLE Plano_Exercicios RENAME COLUMN Periodo_Exercicios TO Duracao_Exercicio;
 
 ALTER TABLE Plano_Exercicios RENAME COLUMN Tipo_Exercicio TO Modalidade_Exercicio;
+
 ```
 
 #### Esta migração corresponde à segunda modelagem e altera o nome das colunas da tabela `Plano_Exercicios` a fim de se manter mais fíel em relação a Smart Fit.
@@ -161,6 +162,7 @@ ALTER TABLE Academia ADD COLUMN Rua_Academia VARCHAR(50) NOT NULL;
 ALTER TABLE Cliente ADD CONSTRAINT Unique_Telefone_Cliente UNIQUE (Telefone_Contato);
 
 ALTER TABLE Instrutor ADD CONSTRAINT Unique_Telefone_Instrutor UNIQUE(Telefone_Contato);
+
 ```
 
 #### Esta migração refatora o campo `Telefone_Contato` de `Cliente` e `Instrutor` a fim de evitar inserções repetidas.
@@ -171,6 +173,9 @@ ALTER TABLE Instrutor ADD CONSTRAINT Unique_Telefone_Instrutor UNIQUE(Telefone_C
 ALTER TABLE Equipamento ADD COLUMN Academia_ID VARCHAR(14) REFERENCES Academia(CNPJ);
 
 ALTER TABLE Cliente DROP COLUMN Turma_ID;
+
+ALTER TABLE Turma RENAME COLUMN Turno TO Turno_Turma;
+
 ````
 
 ### Esta migração corresponde à quarta modelagem.Ela adiciona o atributo `Academia_ID` à tabela `Equipamento`,a fim de facilitar consultas de junção envolvendo as tabelas `Academia` e `Equipamento`,e remove o atributo `Turma_ID` da tabela `Cliente`,para que possa seguir a cardinalidade do relacionamento.
