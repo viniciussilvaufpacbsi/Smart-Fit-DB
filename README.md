@@ -78,7 +78,7 @@ ALTER TABLE Plano_Exercicios ADD COLUMN Turma_ID INT REFERENCES Turma(ID_Turma) 
 
 ```
 
-#### Esta migração corresponde à segunda modelagem e acrescenta as colunas `Email_Usuario`,`Turma_ID` e `Matricula_ID` às tabelas `Usuario`,`Cliente` e `Pagamento`.
+#### Esta migração corresponde à segunda modelagem e acrescenta as colunas `Email_Usuario`,`Turma_ID`,`Matricula_ID`,`Instrutor_ID` e `Turma_ID` às tabelas `Usuario`,`Cliente`,`Pagamento` e `Plano_Exercicios`.
 
 ### Segunda Migração
 
