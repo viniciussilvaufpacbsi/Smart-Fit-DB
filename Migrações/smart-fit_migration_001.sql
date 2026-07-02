@@ -1,5 +1,3 @@
---                                        PRIMEIRA MIGRAÇÃO
-
 ALTER TABLE Usuario ADD COLUMN Email_Usuario VARCHAR(100) UNIQUE NOT NULL;
 
 ALTER TABLE Cliente ADD COLUMN Turma_ID INT REFERENCES Turma(ID_Turma) ON DELETE RESTRICT;
