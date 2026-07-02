@@ -1,8 +1,8 @@
 --												NONA MIGRAÇÃO
 
-ALTER TABLE Usuario ADD COLUMN Academia_ID VARCHAR(14) REFERENCES Academia(CNPJ);
+ALTER TABLE Usuario ADD COLUMN Academia_ID VARCHAR(14) REFERENCES Academia(CNPJ) ON DELETE CASCADE;
 
-ALTER TABLE Plano_Assinatura ADD COLUMN Matricula_ID INT REFERENCES Matricula (ID_Matricula);
+ALTER TABLE Plano_Assinatura ADD COLUMN Matricula_ID INT REFERENCES Matricula (ID_Matricula) ON DELETE CASCADE;
 
 ALTER TABLE Pagamento RENAME TO Fatura_Mensal;
 
