@@ -1,5 +1,3 @@
---                                      SEXTA MIGRAÇÃO
-
 ALTER TABLE Academia DROP COLUMN Endereco_Academia;
 
 ALTER TABLE Academia ADD COLUMN Unidade_Federativa_Academia VARCHAR(2) NOT NULL;
