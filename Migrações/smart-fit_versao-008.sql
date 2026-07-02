@@ -1,6 +1,6 @@
 --                                    OITAVA MIGRAÇÃO          
 
-ALTER TABLE Equipamento ADD COLUMN Academia_ID VARCHAR(14) REFERENCES Academia(CNPJ) ON DELETE CASCADE;
+ALTER TABLE Equipamento ADD COLUMN Academia_ID VARCHAR(14) REFERENCES Academia(CNPJ) ON DELETE RESTRICT;
 
 ALTER TABLE Cliente DROP COLUMN Turma_ID;
 
