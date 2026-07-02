@@ -21,15 +21,15 @@
 ## Entidades
 
 ### Academia:Representa uma unidade (franqueado) composta por informações de cadastro,contato e endereço.
-### Equipamento:Representa uma entidade forte e independente.
-### Usuario:Representa uma entidade composta por informações de cadastro.Ele é uma abstração para `Cliente` e `Instrutor`.
-### Cliente:Representa uma especialização de `Usuario` composta por informações de cadastro.
-### Instrutor:Representa uma especialização de `Usuario` composta por informações de cadastro.
-### Turma:Representa uma entidade fraca dependente de `Instrutor`.
-### Plano_Exercicios:Representa uma entidade fraca dependente de `Turma` e `Instrutor`.
-### Matricula:Representa uma entidade fraca dependente de `Cliente`.
-### Plano_Assinatura:Representa uma entidade forte independente dentro do sistema.
-### Pagamento:Representa uma entidade fraca dependente de `Matricula`,`Plano_Assinatura` e `Cliente`.Ele sempre é gerado pleno `Plano_Assinatura`.
+### Equipamento:Representa uma entidade forte que pertence a uma única unidade.Ele é composto por informações comerciais,como `Nome_Equipamento,Tipo_Equipamento,Condicao_Equipamento` e `Valor_Equipamento`.
+### Usuario:Representa uma entidade fraca dependente de `Academia` composta por informações de cadastro.Ele é uma abstração para `Cliente` e `Instrutor`.
+### Cliente:Representa uma especialização de `Usuario` composta por informações de cadastro exclusivas de um cliente,como `CPF_Cliente`.
+### Instrutor:Representa uma especialização de `Usuario` composta por informações de cadastro exclusivas de um instrutor,como `CREF` e `Especialidade`.
+### Turma:Representa uma entidade fraca dependente de `Cliente` e `Instrutor`.Ela é composta por informações simples como `ID_Turma,Nome_Turma,Turno_Turma` e `Instrutor_ID` 
+### Plano_Exercicios:Representa uma entidade fraca dependente de `Turma` e `Instrutor`.Ele é composto por informações referentes a exercícios,como `Modalidade_Exercicio,Duracao_Exercicio` e `Quantidade_Exercicios`.
+### Matricula:Representa uma entidade fraca dependente de `Cliente`.Ela é composta por informações do `Cliente`,como `Cliente_ID` e de si mesma,como `ID_Matricula` e `Data_Matricula`.
+### Plano_Assinatura:Representa uma entidade fraca dependente de `Matricula`.Ele é composto por informações de si,como `ID_Plano,Nome_Plano` e `Valor_Plano`,além daquelas sobre o `Cliente`,como `Matricula_ID`.Todo `Plano_Assinatura` é "único" pra cada `Cliente` devido a sua `Matricula`.
+### Fatura_Mensal:Representa uma entidade fraca dependente de `Matricula`,`Plano_Assinatura` e `Cliente`.Ela é composta por informações financeiras,como `ID_Fatura,Valor_Fatura,Data_Fechamento` e `Data_Vencimento`,além daquelas envolvendo o `Cliente`.Toda fatura é gerada pelo `Plano_Assinatura`.
 
 ## Relacionamentos
 
@@ -49,7 +49,7 @@
 
 ### Matricula -> Plano_Assinatura 1:N
 
-### Matricula -> Pagamento 1:1
+### Matricula -> Fatura_Mensal 1:1
 
 ## Decisões de Modelagem
 
@@ -57,9 +57,11 @@
 
 ### Academia:O Smart-Fit-DB representa um sistema capaz de gerenciar múltiplas unidades,cada uma com atributos referentes ao registro(CNPJ),endereço e formas de contato.
 
-### Pagamento:O Smart-Fit-DB é um sistema que simula transações financeiras.Devido a todo cliente se matricular e assinar um plano,é necessário que haja uma entidade que represente essas transações:cada matrícula e assinatura são mensais e precisam ser representadas como faturas.
+### Fatura_Mensal:O Smart-Fit-DB é um sistema que simula transações financeiras.Devido a todo cliente se matricular e assinar um plano,é necessário que haja uma entidade que represente essas transações:cada matrícula e assinatura são mensais e precisam ser representadas como faturas.
 
-### Turma:No Smart-Fit-DB múltiplos clientes podem estar em múltiplas turmas,e cada turma só pode ter um único instrutor.Essa decisão foi feita pra organizar os dados de uma forma mais concisa,pois a entidade `Turma` no DER possuí um atributo identificador de um `Instrutor`,mas não de um cliente.Isso implica que deve haver uma tabela `Cliente_Turma` no Smart-Fit-DB.
+### Turma:No Smart-Fit-DB múltiplos clientes podem estar em múltiplas turmas,e cada turma só pode ter um único instrutor.Essa decisão foi feita pra organizar os dados de uma forma mais concisa,pois a entidade `Turma` no DER possuí um atributo identificador de um `Instrutor`,mas não de um cliente.
+
+### Plano_Assinatura:Cada `Cliente` recebe um `Plano_Assinatura` único de acordo com a sua `Matricula`.
 
 # Migrações
 
@@ -178,4 +180,43 @@ ALTER TABLE Turma RENAME COLUMN Turno TO Turno_Turma;
 
 ````
 
-### Esta migração corresponde à quarta modelagem.Ela adiciona o atributo `Academia_ID` à tabela `Equipamento`,a fim de facilitar consultas de junção envolvendo as tabelas `Academia` e `Equipamento`,e remove o atributo `Turma_ID` da tabela `Cliente` para que possa seguir a cardinalidade do relacionamento.Além disso,ela renomeia o atributo `Turno_Turma` da tabela `Turma`.
+### Esta migração corresponde à quarta modelagem.Ela adiciona o atributo `Academia_ID` à tabela `Equipamento`,a fim de seguir o relacionamento **1:N**,e remove o atributo `Turma_ID` da tabela `Cliente` para que possa seguir a cardinalidade do relacionamento.Além disso,ela renomeia o atributo `Turno_Turma` da tabela `Turma`.
+
+### Nona Migração
+
+``` SQL
+ALTER TABLE Usuario ADD COLUMN Academia_ID VARCHAR(14) REFERENCES Academia(CNPJ);
+
+ALTER TABLE Plano_Assinatura ADD COLUMN Matricula_ID INT REFERENCES Matricula (ID_Matricula);
+
+ALTER TABLE Pagamento RENAME TO Fatura_Mensal;
+
+ALTER TABLE Fatura_Mensal RENAME COLUMN ID_Pagamento TO ID_Fatura;
+
+ALTER TABLE Fatura_Mensal RENAME COLUMN Valor_Total TO Valor_Fatura;
+
+ALTER TABLE Fatura_Mensal RENAME COLUMN Data_Pagamento TO Data_Vencimento;
+
+ALTER TABLE Fatura_Mensal RENAME CONSTRAINT Check_Data_Pagamento TO Check_Data_Vencimento;
+
+ALTER TABLE Fatura_Mensal ADD COLUMN Data_Fechamento DATE NOT NULL;
+
+```
+
+### Esta migração corresponde à quinta modelagem.Ela adiciona o atributo `Academia_ID` à tabela `Usuario` a fim de seguir o relacionamento 1:N e o atributo `Matricula_ID` à tabela `Plano_Assinatura`,a fim de seguir com o relacionamento 1:N e tornar cada plano "único" pra cada usuário.Além disso,ele renomeia a tabela `Pagamento` para `Fatura_Mensal` e refatora as suas colunas e restrições para que correspondam às regras de negócios de uma tabela de fatura.
+
+### Décima Migração
+
+``` SQL
+
+CREATE TABLE Cliente_Turma (							         
+  Cliente_ID VARCHAR(11) REFERENCES Cliente (CPF_Cliente),
+  Turma_ID INT REFERENCES Turma (ID_Turma),
+  PRIMARY KEY(Cliente_ID,Turma_ID)
+);
+
+```
+
+### Esta migração corresponde à quinta modelagem.Ela cria uma tabela `Cliente_Turma` para armazenar informações relacionais de uma forma muito mais eficaz em comparação às FKs.
+
+
