@@ -10,60 +10,160 @@
 
 ## Nome do Sistema:Smart-Fit-DB
 
-## Descrição do Sistema:O Smart-Fit-DB é um banco de dados relacional desenvolvido para PostgreSQL a fim de simular um schema semelhante ao da rede de academias Smart Fit.Nele,cada usuário pode se cadastrar como um cliente ou um instrutor,desempenhando papéis diferentes.Todo cliente precisa realizar uma matrícula e assinar um plano que oferece três opções:Smart,Fit e Black.Além disso,os clientes precisam participar de uma turma,a qual é determinada de acordo com os exercícios que eles precisam fazer.Todo instrutor é responsável por uma turma de acordo com a sua especialidade e cada turma precisa seguir um plano de exercícios.Cada plano de exercícios é determinado por um instrutor e está associado a uma única turma.Além disso,os planos de exercícios possuem uma determinada duração e estão associados a uma modalidade.
+## Descrição do Sistema:
 
-## Objetivo do Sistema:O objetivo do Smart-Fit-DB é de ser apenas um exercício acadêmico.Não há nenhuma intenção comercial e todas as semelhanças são apenas para seguir o propósito de simular o modelo de dados da forma mais fiél possível,sem violar os direitos autorais da Smart Fit. 
+### O Smart-Fit-DB é um banco de dados relacional desenvolvido para PostgreSQL a fim de simular um schema semelhante ao da rede de academias Smart Fit.Nele,cada usuário pode se cadastrar como um cliente ou um instrutor,desempenhando papéis diferentes.Todo cliente precisa realizar uma matrícula e assinar um plano que oferece três opções:Smart,Fit e Black.Além disso,os clientes precisam participar de uma turma,a qual é determinada de acordo com os exercícios que eles precisam fazer.Todo instrutor é responsável por uma turma de acordo com a sua especialidade e cada turma precisa seguir um plano de exercícios.Cada plano de exercícios é determinado por um instrutor e está associado a uma única turma.Além disso,os planos de exercícios possuem uma determinada duração e estão associados a uma modalidade.
+
+## Objetivo do Sistema:
+
+### O objetivo do Smart-Fit-DB é de ser apenas um exercício acadêmico.Não há nenhuma intenção comercial e todas as semelhanças são apenas para seguir o propósito de simular o modelo de dados da forma mais fiél possível,sem violar os direitos autorais da Smart Fit. 
 
 # A Modelagem
 
-## Uma Breve Descrição:Os DERs foram desenvolvidos utilizando a ferramenta BR Modelo Web.Cada versão representa um estágio do sistema,o qual é evoluído de forma incremental.
+## Uma Breve Descrição:
+
+### Os DERs foram desenvolvidos utilizando a ferramenta BR Modelo Web.Cada versão representa um estágio do sistema,o qual é evoluído de forma incremental.
 
 ## Entidades
 
-### Academia:Representa uma unidade (franqueado) composta por informações de cadastro,contato e endereço.
+### Academia:Representa uma unidade composta por informações de cadastro,contato e endereço.
+
 ### Equipamento:Representa uma entidade forte que pertence a uma única unidade.Ele é composto por informações comerciais,como `Nome_Equipamento,Tipo_Equipamento,Condicao_Equipamento` e `Valor_Equipamento`.
+
 ### Usuario:Representa uma entidade fraca dependente de `Academia` composta por informações de cadastro.Ele é uma abstração para `Cliente` e `Instrutor`.
+
 ### Cliente:Representa uma especialização de `Usuario` composta por informações de cadastro exclusivas de um cliente,como `CPF_Cliente`.
+
 ### Instrutor:Representa uma especialização de `Usuario` composta por informações de cadastro exclusivas de um instrutor,como `CREF` e `Especialidade`.
+
 ### Turma:Representa uma entidade fraca dependente de `Cliente` e `Instrutor`.Ela é composta por informações simples como `ID_Turma,Nome_Turma,Turno_Turma` e `Instrutor_ID` 
+
 ### Plano_Exercicios:Representa uma entidade fraca dependente de `Turma` e `Instrutor`.Ele é composto por informações referentes a exercícios,como `Modalidade_Exercicio,Duracao_Exercicio` e `Quantidade_Exercicios`.
+
 ### Matricula:Representa uma entidade fraca dependente de `Cliente`.Ela é composta por informações do `Cliente`,como `Cliente_ID` e de si mesma,como `ID_Matricula` e `Data_Matricula`.
-### Plano_Assinatura:Representa uma entidade fraca dependente de `Matricula`.Ele é composto por informações de si,como `ID_Plano,Nome_Plano` e `Valor_Plano`,além daquelas sobre o `Cliente`,como `Matricula_ID`.Todo `Plano_Assinatura` é "único" pra cada `Cliente` devido a sua `Matricula`.
-### Fatura_Mensal:Representa uma entidade fraca dependente de `Matricula`,`Plano_Assinatura` e `Cliente`.Ela é composta por informações financeiras,como `ID_Fatura,Valor_Fatura,Data_Fechamento` e `Data_Vencimento`,além daquelas envolvendo o `Cliente`.Toda fatura é gerada pelo `Plano_Assinatura`.
+
+### Plano_Assinatura:Representa uma entidade fraca dependente de `Matricula`.Ele é composto por informações de si,como `ID_Plano,Nome_Plano` e `Valor_Plano`,além daquelas sobre o cliente como `Matricula_ID`.Todo plano de assinatura é único pra cada cliente devido a sua matricula.
+
+### Fatura_Mensal:Representa uma entidade fraca dependente de `Matricula`,`Plano_Assinatura` e `Cliente`.Ela é composta por informações financeiras,como `ID_Fatura,Valor_Fatura,Data_Fechamento` e `Data_Vencimento`,além daquelas envolvendo o cliente.Toda fatura é gerada pelo plano de assinatura.
 
 ## Relacionamentos
 
-### Academia -> Equipamento 1:N
+### Academia -> Equipamento `1:N`
 
-### Academia -> Usuario 1:N
+### Academia -> Usuario `1:N`
 
-### Cliente -> Turma N:N
+### Cliente -> Turma `N:N`
 
-### Instrutor -> Turma 1:N
+### Instrutor -> Turma `1:N`
 
-### Instrutor -> Plano_Exercicios 1:N
+### Instrutor -> Plano_Exercicios `1:N`
 
-### Turma -> Plano_Exercicios 1:N
+### Turma -> Plano_Exercicios `1:N`
 
-### Cliente -> Matricula 1:1
+### Cliente -> Matricula `1:1`
 
-### Matricula -> Plano_Assinatura 1:N
+### Matricula -> Plano_Assinatura `1:N`
 
-### Matricula -> Fatura_Mensal 1:1
+### Matricula -> Fatura_Mensal `1:1`
 
 ## Decisões de Modelagem
 
-### Usuário:A entidade foi definida para ser uma especialização por disjunção parcial.Escolheu-se tal abordagem para corresponder às modelagens:não há um relacionamento entre `Matricula` e `Instrutor` e por isso a sobreposição parcial não foi escolhida.Além disso,há uma possibilidade de um usuário não ser nem `Cliente` e nem `Instrutor`.
+### Usuário:A entidade foi definida para ser uma especialização por disjunção parcial.Escolheu-se tal abordagem devido a sua simplicidade.Além disso,há a possibilidade de um usuário não ser nem `Cliente` e nem `Instrutor`.
 
-### Academia:O Smart-Fit-DB representa um sistema capaz de gerenciar múltiplas unidades,cada uma com atributos referentes ao registro(CNPJ),endereço e formas de contato.
+### Academia:O Smart-Fit-DB representa um sistema capaz de gerenciar múltiplas unidades,cada uma com seus próprios atributos.
+
+### Equipamento:O Smart-Fit-DB permite armazenar dados referentes aos equipamentos utilizados por cada academia.Todo equipamento só pertence a uma única academia devido à FK.
 
 ### Fatura_Mensal:O Smart-Fit-DB é um sistema que simula transações financeiras.Devido a todo cliente se matricular e assinar um plano,é necessário que haja uma entidade que represente essas transações:cada matrícula e assinatura são mensais e precisam ser representadas como faturas.
 
-### Turma:No Smart-Fit-DB múltiplos clientes podem estar em múltiplas turmas,e cada turma só pode ter um único instrutor.Essa decisão foi feita pra organizar os dados de uma forma mais concisa,pois a entidade `Turma` no DER possuí um atributo identificador de um `Instrutor`,mas não de um cliente.
+### Turma:No Smart-Fit-DB múltiplos clientes podem estar em múltiplas turmas,e cada turma só pode ter um único instrutor.Essa decisão foi tomada pois a entidade `Turma` no DER possuí a FK de `Instrutor`,mas não de `Cliente`.
 
-### Plano_Assinatura:Cada `Cliente` recebe um `Plano_Assinatura` único de acordo com a sua `Matricula`.
+### Plano_Assinatura:Decidiu-se transformá-lo em uma entidade fraca para que cada plano seja único para cada cliente,de acordo com sua matrícula.
 
 # Migrações
+
+### Schema Inicial
+
+``` SQL
+
+CREATE TABLE Academia (
+   CNPJ VARCHAR(14) PRIMARY KEY,
+   Nome_Academia VARCHAR(100) NOT NULL,
+   Endereco_Academia VARCHAR(200) NOT NULL,
+   Telefone_Contato VARCHAR(11) UNIQUE NOT NULL
+);
+
+CREATE TABLE Usuario (
+  ID_Usuario SERIAL PRIMARY KEY,
+  Nome_Usuario VARCHAR(100) UNIQUE NOT NULL,
+  Senha_Usuario VARCHAR(60) NOT NULL,
+  Data_Cadastro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Cliente (
+ CPF_Cliente VARCHAR(11) PRIMARY KEY,
+ Nome_Cliente VARCHAR(100) NOT NULL,
+ Telefone_Contato VARCHAR(11) NOT NULL,
+ Usuario_ID INT REFERENCES Usuario(ID_Usuario) ON DELETE CASCADE
+);
+
+CREATE TABLE Instrutor (
+  CREF VARCHAR(6) PRIMARY KEY,
+  Nome_Instrutor VARCHAR(100) NOT NULL,
+  Telefone_Contato VARCHAR(11) NOT NULL,
+  Especialidade VARCHAR(30) NOT NULL,
+  Usuario_ID INT REFERENCES Usuario(ID_Usuario) ON DELETE CASCADE
+);
+
+CREATE TABLE Matricula (
+  ID_Matricula SERIAL PRIMARY KEY,
+  Data_Matricula TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  Cliente_ID VARCHAR(11) REFERENCES Cliente(CPF_Cliente) ON DELETE CASCADE
+);
+
+CREATE TABLE Turma (
+  ID_Turma SERIAL PRIMARY KEY,
+  Nome_Turma VARCHAR(75) NOT NULL,
+  Turno VARCHAR(30) NOT NULL,
+  Instrutor_ID VARCHAR(6) REFERENCES Instrutor(CREF) ON DELETE CASCADE
+);
+
+CREATE TABLE Plano_Assinatura (
+  ID_Plano SERIAL PRIMARY KEY,
+  Nome_Plano VARCHAR(30) NOT NULL,
+  Valor_Plano NUMERIC(4,2) NOT NULL,
+  Data_Vencimento DATE NOT NULL
+);
+
+CREATE TABLE Pagamento (
+  ID_Pagamento SERIAL PRIMARY KEY,
+  Data_Pagamento DATE NOT NULL,
+  Forma_Pagamento VARCHAR(30) NOT NULL,
+  Valor_Total NUMERIC(5,2) NOT NULL,
+  Cliente_ID VARCHAR(11) REFERENCES Cliente(CPF_Cliente) ON DELETE CASCADE,
+  Plano_ID INT REFERENCES Plano_Assinatura(ID_Plano) ON DELETE CASCADE
+);  
+
+CREATE TABLE Equipamento (
+  ID_Equipamento SERIAL PRIMARY KEY,
+  Nome_Equipamento VARCHAR(100) NOT NULL,
+  Tipo_Equipamento VARCHAR(40),
+  Condicao_Equipamento VARCHAR(50) NOT NULL,
+  Valor_Equipamento NUMERIC(8,2) NOT NULL
+);
+
+CREATE TABLE Plano_Exercicios (
+  ID_Plano SERIAL PRIMARY KEY,
+  Tipo_Exercicio VARCHAR(200) NOT NULL,
+  Quantidade_Exercicios INT NOT NULL,
+  Periodo_Exercicios VARCHAR(20) NOT NULL
+);
+
+```
+ 
+
+#### Este schema corresponde à primeira modelagem.
+
 
 ### Primeira Migração
 
