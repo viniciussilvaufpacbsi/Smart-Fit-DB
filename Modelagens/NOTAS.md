@@ -1,12 +1,20 @@
-# OBSERVAÇÃO:Este arquivo serve apenas descrever as mudanças dos DERs,ele não explica decisões de modelagem,relacionamentos ou restrições.
+# Este arquivo serve apenas descrever as mudanças dos DERs,ele não explica decisões de modelagem,relacionamentos ou restrições.
 
 ## Smart-Fit_DB-1
 
-### Descricão:Representa a visão geral do sistema.Nele,existe a especialização por sobreposição parcial em Usuario.
+### Representa a visão geral do sistema.Nele,existe a especialização por sobreposição parcial em Usuario.
 
 ## Smart-Fit_DB-2
 
-### Adições:Turma_ID em Cliente,Instrutor_ID e Turma_ID em Plano_Exercicios,Matricula_ID em Pagamento e Email_Usuario em Usuario.
+### Adições
+
+#### 1.Turma_ID em Cliente
+
+#### 2.Instrutor_ID e Turma_ID em Plano_Exercicios
+
+#### 3.Matricula_ID em Pagamento 
+
+#### 4.Email_Usuario em Usuario.
 
 ### Modificações
 
