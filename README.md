@@ -42,9 +42,9 @@
 
 ### Matricula:Representa uma entidade fraca dependente de `Cliente`.Ela é composta por informações do `Cliente`,como `Cliente_ID` e de si mesma,como `ID_Matricula` e `Data_Matricula`.
 
-### Plano_Assinatura:Representa uma entidade fraca dependente de `Matricula`.Ele é composto por informações de si,como `ID_Plano,Nome_Plano` e `Valor_Plano`,além daquelas sobre o cliente como `Matricula_ID`.Todo plano de assinatura é único pra cada cliente devido a sua matricula.
+### Plano_Assinatura:Representa uma entidade fraca dependente de `Cliente`.Ele é composto por informações de si,como `ID_Plano,Nome_Plano` e `Valor_Plano` e também por informações sobre o cliente,como `Cliente_ID`.
 
-### Fatura_Mensal:Representa uma entidade fraca dependente de `Matricula`,`Plano_Assinatura` e `Cliente`.Ela é composta por informações financeiras,como `ID_Fatura,Valor_Fatura,Data_Fechamento` e `Data_Vencimento`,além daquelas envolvendo o cliente.Toda fatura é gerada pelo plano de assinatura.
+### Fatura_Mensal:Representa uma entidade fraca dependente de `Plano_Assinatura` e `Cliente`.Ela é composta por informações financeiras,como `ID_Fatura,Valor_Fatura,Data_Fechamento` e `Data_Vencimento`,além daquelas envolvendo o cliente.Toda fatura é gerada pelo plano de assinatura.
 
 ## Relacionamentos
 
@@ -60,11 +60,13 @@
 
 ### Turma -> Plano_Exercicios `1:N`
 
+### Plano_Exercicios -> Equipamento `1:N`
+
 ### Cliente -> Matricula `1:1`
 
-### Matricula -> Plano_Assinatura `1:N`
+### Cliente -> Plano_Assinatura `1:N`
 
-### Matricula -> Fatura_Mensal `1:1`
+### Plano_Assinatura -> Fatura_Mensal `1:1`
 
 ## Decisões de Modelagem
 
@@ -72,13 +74,13 @@
 
 ### Academia:O Smart-Fit-DB representa um sistema capaz de gerenciar múltiplas unidades,cada uma com seus próprios atributos.
 
-### Equipamento:O Smart-Fit-DB permite armazenar dados referentes aos equipamentos utilizados por cada academia.Todo equipamento só pertence a uma única academia devido à FK.
+### Equipamento:O Smart-Fit-DB permite armazenar dados referentes aos equipamentos utilizados por cada academia.Todo equipamento só pertence a uma única academia devido à FK.Além disso,cada equipamento registrado pode ser usado em um determinado plano de exercícios.
 
 ### Fatura_Mensal:O Smart-Fit-DB é um sistema que simula transações financeiras.Devido a todo cliente se matricular e assinar um plano,é necessário que haja uma entidade que represente essas transações:cada matrícula e assinatura são mensais e precisam ser representadas como faturas.
 
 ### Turma:No Smart-Fit-DB múltiplos clientes podem estar em múltiplas turmas,e cada turma só pode ter um único instrutor.Essa decisão foi tomada pois a entidade `Turma` no DER possuí a FK de `Instrutor`,mas não de `Cliente`.
 
-### Plano_Assinatura:Decidiu-se transformá-lo em uma entidade fraca para que cada plano seja único para cada cliente,de acordo com sua matrícula.
+### Plano_Assinatura:Decidiu-se transformá-lo em uma entidade fraca para que cada plano seja único para cada cliente.
 
 # Migrações
 
@@ -303,7 +305,11 @@ ALTER TABLE Fatura_Mensal ADD COLUMN Data_Fechamento DATE NOT NULL;
 
 ```
 
-### Esta migração corresponde à quinta modelagem.Ela adiciona o atributo `Academia_ID` à tabela `Usuario` a fim de seguir o relacionamento 1:N e o atributo `Matricula_ID` à tabela `Plano_Assinatura`,a fim de seguir com o relacionamento 1:N e tornar cada plano "único" pra cada usuário.Além disso,ele renomeia a tabela `Pagamento` para `Fatura_Mensal` e refatora as suas colunas e restrições para que correspondam às regras de negócios de uma tabela de fatura.
+### Esta migração corresponde à quinta modelagem.
+
+### Ela adiciona o atributo `Academia_ID` à tabela `Usuario` a fim de seguir o relacionamento 1:N e o atributo `Matricula_ID` à tabela `Plano_Assinatura`,a fim de seguir com o relacionamento 1:N e tornar cada plano "único" pra cada usuário.
+
+### Além disso,ele renomeia a tabela `Pagamento` para `Fatura_Mensal` e refatora as suas colunas e restrições para que correspondam às regras de negócios de uma tabela de fatura.
 
 ### Décima Migração
 
@@ -319,4 +325,35 @@ CREATE TABLE Cliente_Turma (
 
 ### Esta migração corresponde à quinta modelagem.Ela cria uma tabela `Cliente_Turma` para armazenar informações relacionais de uma forma muito mais eficaz em comparação às FKs.
 
+### Décima Primeira Migração
 
+``` SQL
+ALTER TABLE Fatura_Mensal DROP COLUMN Matricula_ID;
+
+ALTER TABLE Plano_Assinatura DROP COLUMN Matricula_ID;
+
+ALTER TABLE Academia DROP COLUMN Unidade_Federativa_Academia;
+
+```
+
+### Esta migração corresponde à sexta modelagem.
+
+### Removeu-se `Matricula_ID` pois `Fatura_Mensal` é gerada por `Plano_Assinatura`.Além disso,o plano de assinatura é gerado por um cliente.
+
+### Em relação a `Unidade_Federativa_Academia`,ela foi removida devido ao escopo do projeto ter sido mudado para representar somentes as unidades de Belém do Pará.
+
+### Décima Segunda Migração
+
+``` SQL
+
+ALTER TABLE Plano_Exercicios ADD COLUMN Equipamento_ID INT REFERENCES Equipamento (ID_Equipamento) ON DELETE CASCADE ON UPDATE RESTRICT;
+
+ALTER TABLE Plano_Assinatura ADD COLUMN Cliente_ID VARCHAR(11) REFERENCES Cliente (CPF_Cliente) ON DELETE CASCADE ON UPDATE RESTRICT;
+
+```
+
+### Esta migração corresponde à sexta modelagem.
+
+### Adicionou-se `Equipamento_ID` pois foi inferido que um plano de exercícios precisa de um equipamento.
+
+### Adicinou-se `Cliente_ID` ao `Plano_Assinatura` pois ele depende (diretamente) de um cliente e não de uma matrícula.
