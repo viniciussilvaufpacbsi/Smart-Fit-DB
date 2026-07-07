@@ -2,7 +2,7 @@
 
 ## Trabalho:Projeto de Bancos de Dados I  
 ## Orientador:Gustavo Henrique Lima Pinto 
-## Equipe:Vinicius da Silva e Silva e João de Deus da Conceição Neto
+## Equipe:Vinicius da Silva e Silva (202411140038) e João de Deus da Conceição Neto (202204940037)
 ## Curso:Sistemas de Informação
 ## Instituição:Universidade Federal do Pará
 
@@ -18,7 +18,7 @@
 
 ### O objetivo do Smart-Fit-DB é de ser apenas um exercício acadêmico.Não há nenhuma intenção comercial e todas as semelhanças são apenas para seguir o propósito de simular o modelo de dados da forma mais fiél possível,sem violar os direitos autorais da Smart Fit. 
 
-# A Modelagem
+# Sobre A Modelagem
 
 ## Uma Breve Descrição:
 
@@ -133,7 +133,7 @@ CREATE TABLE Turma (
 CREATE TABLE Plano_Assinatura (
   ID_Plano SERIAL PRIMARY KEY,
   Nome_Plano VARCHAR(30) NOT NULL,
-  Valor_Plano NUMERIC(4,2) NOT NULL,
+  Valor_Plano NUMERIC(5,2) NOT NULL,
   Data_Vencimento DATE NOT NULL
 );
 
@@ -141,7 +141,7 @@ CREATE TABLE Pagamento (
   ID_Pagamento SERIAL PRIMARY KEY,
   Data_Pagamento DATE NOT NULL,
   Forma_Pagamento VARCHAR(30) NOT NULL,
-  Valor_Total NUMERIC(5,2) NOT NULL,
+  Valor_Total NUMERIC(6,2) NOT NULL,
   Cliente_ID VARCHAR(11) REFERENCES Cliente(CPF_Cliente) ON DELETE CASCADE,
   Plano_ID INT REFERENCES Plano_Assinatura(ID_Plano) ON DELETE CASCADE
 );  
@@ -357,3 +357,22 @@ ALTER TABLE Plano_Assinatura ADD COLUMN Cliente_ID VARCHAR(11) REFERENCES Client
 ### Adicionou-se `Equipamento_ID` pois foi inferido que um plano de exercícios precisa de um equipamento.
 
 ### Adicinou-se `Cliente_ID` ao `Plano_Assinatura` pois ele depende (diretamente) de um cliente e não de uma matrícula.
+
+# Métodos de Funcionamento
+
+## DB Fiddle
+
+### 1.Abra o DB Fiddle
+
+### 2.Selecione PostgreSQL
+
+### 3.Copie o schema inicial
+
+### 4.Copie as migrações
+
+### 5.Copie os DMLs
+
+### 6.Elabore consultas
+
+### 7.Aperte "Run"
+
