@@ -43,7 +43,7 @@ CREATE TABLE Turma (
 CREATE TABLE Plano_Assinatura (
   ID_Plano SERIAL PRIMARY KEY,
   Nome_Plano VARCHAR(30) NOT NULL,
-  Valor_Plano NUMERIC(4,2) NOT NULL,
+  Valor_Plano NUMERIC(5,2) NOT NULL,
   Data_Vencimento DATE NOT NULL
 );
 
@@ -51,7 +51,7 @@ CREATE TABLE Pagamento (
   ID_Pagamento SERIAL PRIMARY KEY,
   Data_Pagamento DATE NOT NULL,
   Forma_Pagamento VARCHAR(30) NOT NULL,
-  Valor_Total NUMERIC(5,2) NOT NULL,
+  Valor_Total NUMERIC(6,2) NOT NULL,
   Cliente_ID VARCHAR(11) REFERENCES Cliente(CPF_Cliente) ON DELETE CASCADE,
   Plano_ID INT REFERENCES Plano_Assinatura(ID_Plano) ON DELETE CASCADE
 );  
