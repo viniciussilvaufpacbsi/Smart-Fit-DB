@@ -12,11 +12,11 @@
 
 ## Descrição do Sistema:
 
-### O Smart-Fit-DB é um banco de dados relacional desenvolvido para PostgreSQL a fim de simular um schema semelhante ao da rede de academias Smart Fit.Nele,temos um conjunto de academias,onde cada uma representa um franqueado.Toda academia possuí usuários e equipamentos.Cada usuário pode se cadastrar como cliente ou instrutor.Um cliente precisa realizar uma matrícula e pode assinar um plano que oferece três opções:Smart,Fit e Black.Além disso,um cliente pode participar de uma turma,a qual está de acordo com uma modalidade de exercícios.Cada instrutor é responsável por uma turma,devido a sua especialidade e cada turma precisa seguir um plano de exercícios.Todo plano de exercícios é determinado por um instrutor e está associado a uma turma.Cada plano de exercícios corresponde a uma modalidade e possuí uma quantidade de exercícios e uma duração.Além disso,todo plano de exercícios faz uso de um equipamento.Um equipamento pertence a uma academia.
+### O Smart-Fit-DB é um banco de dados relacional desenvolvido para PostgreSQL a fim de simular um schema semelhante ao da rede de academias Smart Fit.Nele,temos um conjunto de academias,onde cada uma representa um franqueado.Toda academia possuí usuários e equipamentos.Cada usuário pode se cadastrar como cliente ou instrutor.Um cliente precisa realizar uma matrícula e pode assinar um plano que oferece três opções:Smart,Fit e Black.Além disso,um cliente pode participar de uma turma,a qual está de acordo com uma modalidade de exercícios.Cada instrutor é responsável por uma turma devido a sua especialidade e cada turma precisa seguir um plano de exercícios.Todo plano de exercícios é determinado por um instrutor e está associado a uma turma.Cada plano de exercícios corresponde a uma modalidade e possuí uma quantidade de exercícios e uma duração.Além disso,todo plano de exercícios faz uso de um equipamento.Todo equipamento pertence a uma academia.
 
 ## Objetivo do Sistema:
 
-### O objetivo do Smart-Fit-DB é de ser apenas um exercício acadêmico.Não há nenhuma intenção comercial e todas as semelhanças são apenas para seguir o propósito de simular um modelo de dados da forma mais fiél possível,sem violar os direitos autorais da Smart Fit.
+### O objetivo do Smart-Fit-DB é de ser apenas um exercício acadêmico.Não há intenções comerciais e todas as semelhanças são apenas para seguir o propósito de simular um modelo de dados da forma mais fiél possível,sem violar os direitos autorais da Smart Fit.
 
 # Sobre A Modelagem
 
@@ -28,29 +28,29 @@
 
 ### Todas as evoluções foram feitas para tornar o sistema mais fiél e otimizado possível.
 
-### Os PDFs encontram-se no diretório `Modelagens`.
+### Os DERs encontram-se no diretório `Modelagens`.
 
 ## Entidades
 
-### Academia:Representa uma unidade composta por informações de cadastro,contato e endereço.
+### Academia:Entidade forte que representa uma franqueado composto de atributos como `CNPJ,Nome_Academia,Cidade_Academia,Bairro_Academia` e `Rua_Academia`.
 
-### Equipamento:Representa uma entidade forte que pertence a uma única unidade.Ele é composto por informações comerciais,como `Nome_Equipamento,Tipo_Equipamento,Condicao_Equipamento` e `Valor_Equipamento`.
+### Equipamento:Entidade forte que pertence a uma academia.Ele é composto por atributos como `Nome_Equipamento,Tipo_Equipamento,Condicao_Equipamento`,`Valor_Equipamento` e `Academia_ID`.
 
-### Usuario:Representa uma entidade fraca dependente de `Academia` composta por informações de cadastro.Ele é uma abstração para `Cliente` e `Instrutor`.
+### Usuario:Entidade fraca dependente de `Academia` composta de atributos como `Nome_Usuario,Senha_Usuario,Data_Cadastro` e `Academia_ID.Ele é uma abstração para `Cliente` e `Instrutor`.
 
-### Cliente:Representa uma especialização de `Usuario` composta por informações de cadastro exclusivas de um cliente,como `CPF_Cliente`.
+### Cliente:Especialização de `Usuario` composta de atributos como `CPF_Cliente`,`Telefone_Contato` e `Usuario_ID`.
 
-### Instrutor:Representa uma especialização de `Usuario` composta por informações de cadastro exclusivas de um instrutor,como `CREF` e `Especialidade`.
+### Instrutor:Especialização de `Usuario` composta de atributos como `CREF,Telefone_Contato` e `Especialidade`.
 
-### Turma:Representa uma entidade fraca dependente de `Cliente` e `Instrutor`.Ela é composta por informações simples como `ID_Turma,Nome_Turma,Turno_Turma` e `Instrutor_ID` 
+### Turma:Entidade fraca dependente de `Cliente` e `Instrutor`.Ela é composta de atributos como `ID_Turma,Nome_Turma,Turno_Turma` e `Instrutor_ID` 
 
-### Plano_Exercicios:Representa uma entidade fraca dependente de `Turma` e `Instrutor`.Ele é composto por informações referentes a exercícios como `Modalidade_Exercicio,Duracao_Exercicio` e `Quantidade_Exercicios`.Além disso,ele possuí informações sobre equipamentos,como `Equipamento_ID`.
+### Plano_Exercicios:Entidade fraca dependente de `Turma` e `Instrutor`.Ele é composto de atributos como `Modalidade_Exercicio,Duracao_Exercicio,Quantidade_Exercicios` e `Equipamento_ID`.
 
-### Matricula:Representa uma entidade fraca dependente de `Cliente`.Ela é composta por informações do `Cliente`,como `Cliente_ID` e de si mesma,como `ID_Matricula` e `Data_Matricula`.
+### Matricula:Entidade fraca dependente de `Cliente`.Ela é composta de atributos como `ID_Matricula,Cliente_ID` e `Data_Matricula`.
 
-### Plano_Assinatura:Representa uma entidade fraca dependente de `Cliente`.Ele é composto por informações de si como `ID_Plano,Nome_Plano` e `Valor_Plano`,e também por informações sobre o cliente como `Cliente_ID`.
+### Plano_Assinatura:Entidade fraca dependente de `Cliente`.Ele é composto de atributos como `ID_Plano,Nome_Plano, `Valor_Plano` e `Cliente_ID`.
 
-### Fatura_Mensal:Representa uma entidade fraca dependente de `Plano_Assinatura` e `Cliente`.Ela é composta por informações financeiras,como `ID_Fatura,Valor_Fatura,Data_Fechamento` e `Data_Vencimento`,além de `Cliente_ID` e `Plano_ID`.Toda fatura é gerada pelo plano de assinatura.
+### Fatura_Mensal:Entidade fraca dependente de `Plano_Assinatura` e `Cliente`.Ela é composta de atributos como `ID_Fatura,Valor_Fatura,Data_Fechamento,Data_Vencimento,Cliente_ID` e `Plano_ID`.Ela é gerada por um `Plano_Assinatura`.
 
 ## Relacionamentos
 
@@ -80,7 +80,7 @@
 
 ### Academia:O Smart-Fit-DB representa um sistema capaz de gerenciar múltiplas unidades,cada uma com seus próprios atributos.
 
-### Equipamento:O Smart-Fit-DB permite armazenar dados referentes aos equipamentos utilizados por cada academia.Todo equipamento só pertence a uma única academia devido à FK.Além disso,cada equipamento registrado pode ser usado em um determinado plano de exercícios.
+### Equipamento:O Smart-Fit-DB permite armazenar dados referentes aos equipamentos utilizados por cada academia.Todo equipamento só pertence a uma única academia devido à `FK`.Além disso,cada equipamento registrado pode ser usado em um determinado plano de exercícios.
 
 ### Fatura_Mensal:O Smart-Fit-DB é um sistema que simula transações financeiras.Devido aos clientes assinarem planos de assinatura,é necessário que haja uma entidade que represente essas transações,pois as assinaturas são mensais e precisam estar representadas como faturas.
 
