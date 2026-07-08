@@ -88,8 +88,25 @@
 
 #### 3.Matricula_ID em Plano_Assinatura
 
+## Smart-Fit_DB-6
 
+### Alterações
 
+#### 1.Estabelece um relacionamento `1:N` entre Equipamento e Plano_Exercicios
 
+#### 2.Separa o relacionamento entre Matricula e Plano_Assinatura.Matricula e Plano_Assinatura passam a se relacionar com Cliente de maneira separada.
 
+### Remoções
+
+#### 1.Matricula_ID de Fatura_Mensal 
+
+### 2.Matricula_ID de Plano_Assinatura
+
+### 3.Unidade_Federativa de Academia
+
+### Adições
+
+#### 1.Cliente_ID em Plano_Assinatura
+
+#### 2.Equipamento_ID em Plano_Exercicios
 
