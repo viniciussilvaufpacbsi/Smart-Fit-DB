@@ -28,6 +28,8 @@
 
 ### Todas as evoluções foram feitas para tornar o sistema mais fiél e otimizado possível.
 
+### Os PDFs encontram-se no diretório `Modelagens`.
+
 ## Entidades
 
 ### Academia:Representa uma unidade composta por informações de cadastro,contato e endereço.
@@ -170,7 +172,6 @@ CREATE TABLE Plano_Exercicios (
 
 #### Este schema corresponde à primeira modelagem.
 
-
 ### Primeira Migração
 
 ``` SQL
@@ -245,7 +246,7 @@ ALTER TABLE Pagamento ADD CONSTRAINT Check_Valor_Pagamento CHECK (Valor_Total > 
 
 ```
 
-#### Esta migração adiciona constraints a fim de evitar possíveis erros de inserções.
+#### Esta migração adiciona restrições a fim de evitar possíveis erros de inserções.
 
 ### Sexta Migração
 
@@ -273,7 +274,8 @@ ALTER TABLE Instrutor ADD CONSTRAINT Unique_Telefone_Instrutor UNIQUE(Telefone_C
 
 ```
 
-#### Esta migração refatora o campo `Telefone_Contato` de `Cliente` e `Instrutor` a fim de evitar redundâncias nos dados.
+#### Esta migração refatora o campo `Telefone_Contato` de `Cliente` e `Instrutor` para seguir a regra de negócios comum de que todo número de telefone precisa ser único.
+
 
 ### Oitava Migração
 
@@ -288,9 +290,11 @@ ALTER TABLE Turma RENAME COLUMN Turno TO Turno_Turma;
 
 ### Esta migração corresponde à quarta modelagem.
 
-### Ela adiciona o atributo `Academia_ID` à tabela `Equipamento`,a fim de seguir o relacionamento **1:N**,e remove o atributo `Turma_ID` da tabela `Cliente` para que possa seguir a cardinalidade do relacionamento.
+### Adiciona-se o atributo `Academia_ID` à tabela `Equipamento` a fim de seguir o relacionamento `1:N`. 
 
-### Além disso,ela renomeia o atributo `Turno_Turma` da tabela `Turma`.
+### Remove-se o atributo `Turma_ID` da tabela `Cliente` para seguir o relacionamento `N:N`. 
+
+### Renomeia-se o atributo `Turno` da tabela `Turma` para `Turno_Turma.
 
 ### Nona Migração
 
@@ -315,7 +319,7 @@ ALTER TABLE Fatura_Mensal ADD COLUMN Data_Fechamento DATE NOT NULL;
 
 ### Esta migração corresponde à quinta modelagem.
 
-### Ela adiciona o atributo `Academia_ID` à tabela `Usuario` a fim de seguir o relacionamento 1:N e o atributo `Matricula_ID` à tabela `Plano_Assinatura`,a fim de seguir com o relacionamento 1:N e tornar cada plano "único" pra cada usuário.
+### Ela adiciona o atributo `Academia_ID` à tabela `Usuario` a fim de seguir o relacionamento 1:N e o atributo `Matricula_ID` à tabela `Plano_Assinatura` a fim de seguir com o relacionamento 1:N e tornar cada plano único pra cada usuário.
 
 ### Além disso,ele renomeia a tabela `Pagamento` para `Fatura_Mensal` e refatora as suas colunas e restrições para que correspondam às regras de negócios de uma tabela de fatura.
 
@@ -331,7 +335,9 @@ CREATE TABLE Cliente_Turma (
 
 ```
 
-### Esta migração corresponde à quinta modelagem.Ela cria uma tabela `Cliente_Turma` para armazenar informações relacionais de uma forma muito mais eficaz em comparação às FKs.
+### Esta migração corresponde à quinta modelagem.
+
+### Ela cria uma tabela `Cliente_Turma` para armazenar informações relacionais de uma forma muito mais eficaz em comparação às FKs.
 
 ### Décima Primeira Migração
 
@@ -346,9 +352,9 @@ ALTER TABLE Academia DROP COLUMN Unidade_Federativa_Academia;
 
 ### Esta migração corresponde à sexta modelagem.
 
-### Removeu-se `Matricula_ID` pois `Fatura_Mensal` é gerada por `Plano_Assinatura`.Além disso,o plano de assinatura é gerado por um cliente.
+### Remove-se `Matricula_ID` pois `Fatura_Mensal` é gerada por `Plano_Assinatura`.
 
-### Em relação a `Unidade_Federativa_Academia`,ela foi removida devido ao escopo do projeto ter sido alterado para representar somentes as unidades de Belém do Pará.
+### Remove-se `Unidade_Federativa_Academia` devido ao escopo do projeto ter sido reduzido.
 
 ### Décima Segunda Migração
 
@@ -362,21 +368,19 @@ ALTER TABLE Plano_Assinatura ADD COLUMN Cliente_ID VARCHAR(11) REFERENCES Client
 
 ### Esta migração corresponde à sexta modelagem.
 
-### Adicionou-se `Equipamento_ID` pois foi inferido que um plano de exercícios precisa de um equipamento.
+### Adiciona-se `Equipamento_ID` pois percebeu-se que um plano de exercícios precisa de um equipamento.
 
-### Adicinou-se `Cliente_ID` ao `Plano_Assinatura` pois ele depende (diretamente) de um cliente e não de uma matrícula.
+### Adiciona-se `Cliente_ID` ao `Plano_Assinatura` pois ele depende de um cliente e não de uma matrícula.
 
-# Métodos de Rodar o Projeto
+# Método de Rodar o Projeto
 
-## DB Fiddle
+## 1.Abra o DB Fiddle
 
-### 1.Abra o DB Fiddle
+## 2.Selecione PostgreSQL
 
-### 2.Selecione PostgreSQL
+## 3.Copie o schema inicial
 
-### 3.Copie o schema inicial
-
-### 4.Copie as migrações
+## 4.Copie as migrações
 
 ### 5.Copie os DMLs
 
