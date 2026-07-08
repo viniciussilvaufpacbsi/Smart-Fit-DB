@@ -2,7 +2,7 @@
 
 ## Trabalho:Projeto de Bancos de Dados I  
 ## Orientador:Gustavo Henrique Lima Pinto 
-## Equipe:Vinicius da Silva e Silva (202411140038) e João de Deus da Conceição Neto (202204940037)
+## Equipe:Vinicius da Silva e Silva < 202411140038 > e João de Deus da Conceição Neto < 202204940037 >
 ## Curso:Sistemas de Informação
 ## Instituição:Universidade Federal do Pará
 
@@ -12,17 +12,21 @@
 
 ## Descrição do Sistema:
 
-### O Smart-Fit-DB é um banco de dados relacional desenvolvido para PostgreSQL a fim de simular um schema semelhante ao da rede de academias Smart Fit.Nele,cada usuário pode se cadastrar como um cliente ou um instrutor,desempenhando papéis diferentes.Todo cliente precisa realizar uma matrícula e assinar um plano que oferece três opções:Smart,Fit e Black.Além disso,os clientes precisam participar de uma turma,a qual é determinada de acordo com os exercícios que eles precisam fazer.Todo instrutor é responsável por uma turma de acordo com a sua especialidade e cada turma precisa seguir um plano de exercícios.Cada plano de exercícios é determinado por um instrutor e está associado a uma única turma.Além disso,os planos de exercícios possuem uma determinada duração e estão associados a uma modalidade.
+### O Smart-Fit-DB é um banco de dados relacional desenvolvido para PostgreSQL a fim de simular um schema semelhante ao da rede de academias Smart Fit.Nele,temos um conjunto de academias,onde cada uma representa um franqueado.Toda academia possuí usuários e equipamentos.Cada usuário pode se cadastrar como cliente ou instrutor.Um cliente precisa realizar uma matrícula e pode assinar um plano que oferece três opções:Smart,Fit e Black.Além disso,um cliente pode participar de uma turma,a qual está de acordo com uma modalidade de exercícios.Cada instrutor é responsável por uma turma,devido a sua especialidade e cada turma precisa seguir um plano de exercícios.Todo plano de exercícios é determinado por um instrutor e está associado a uma turma.Cada plano de exercícios corresponde a uma modalidade e possuí uma quantidade de exercícios e uma duração.Além disso,todo plano de exercícios faz uso de um equipamento.Um equipamento pertence a uma academia.
 
 ## Objetivo do Sistema:
 
-### O objetivo do Smart-Fit-DB é de ser apenas um exercício acadêmico.Não há nenhuma intenção comercial e todas as semelhanças são apenas para seguir o propósito de simular o modelo de dados da forma mais fiél possível,sem violar os direitos autorais da Smart Fit. 
+### O objetivo do Smart-Fit-DB é de ser apenas um exercício acadêmico.Não há nenhuma intenção comercial e todas as semelhanças são apenas para seguir o propósito de simular um modelo de dados da forma mais fiél possível,sem violar os direitos autorais da Smart Fit.
 
 # Sobre A Modelagem
 
 ## Uma Breve Descrição:
 
-### Os DERs foram desenvolvidos utilizando a ferramenta BR Modelo Web.Cada versão representa um estágio do sistema,o qual é evoluído de forma incremental.
+### Cada DER foi desenvolvido por meio da ferramenta BR Modelo Web.
+
+### Cada versão representa um estágio do sistema,o qual é evoluído de forma incremental.
+
+### Todas as evoluções foram feitas para tornar o sistema mais fiél e otimizado possível.
 
 ## Entidades
 
@@ -38,13 +42,13 @@
 
 ### Turma:Representa uma entidade fraca dependente de `Cliente` e `Instrutor`.Ela é composta por informações simples como `ID_Turma,Nome_Turma,Turno_Turma` e `Instrutor_ID` 
 
-### Plano_Exercicios:Representa uma entidade fraca dependente de `Turma` e `Instrutor`.Ele é composto por informações referentes a exercícios,como `Modalidade_Exercicio,Duracao_Exercicio` e `Quantidade_Exercicios`.
+### Plano_Exercicios:Representa uma entidade fraca dependente de `Turma` e `Instrutor`.Ele é composto por informações referentes a exercícios como `Modalidade_Exercicio,Duracao_Exercicio` e `Quantidade_Exercicios`.Além disso,ele possuí informações sobre equipamentos,como `Equipamento_ID`.
 
 ### Matricula:Representa uma entidade fraca dependente de `Cliente`.Ela é composta por informações do `Cliente`,como `Cliente_ID` e de si mesma,como `ID_Matricula` e `Data_Matricula`.
 
-### Plano_Assinatura:Representa uma entidade fraca dependente de `Cliente`.Ele é composto por informações de si,como `ID_Plano,Nome_Plano` e `Valor_Plano` e também por informações sobre o cliente,como `Cliente_ID`.
+### Plano_Assinatura:Representa uma entidade fraca dependente de `Cliente`.Ele é composto por informações de si como `ID_Plano,Nome_Plano` e `Valor_Plano`,e também por informações sobre o cliente como `Cliente_ID`.
 
-### Fatura_Mensal:Representa uma entidade fraca dependente de `Plano_Assinatura` e `Cliente`.Ela é composta por informações financeiras,como `ID_Fatura,Valor_Fatura,Data_Fechamento` e `Data_Vencimento`,além daquelas envolvendo o cliente.Toda fatura é gerada pelo plano de assinatura.
+### Fatura_Mensal:Representa uma entidade fraca dependente de `Plano_Assinatura` e `Cliente`.Ela é composta por informações financeiras,como `ID_Fatura,Valor_Fatura,Data_Fechamento` e `Data_Vencimento`,além de `Cliente_ID` e `Plano_ID`.Toda fatura é gerada pelo plano de assinatura.
 
 ## Relacionamentos
 
@@ -70,17 +74,17 @@
 
 ## Decisões de Modelagem
 
-### Usuário:A entidade foi definida para ser uma especialização por disjunção parcial.Escolheu-se tal abordagem devido a sua simplicidade.Além disso,há a possibilidade de um usuário não ser nem `Cliente` e nem `Instrutor`.
+### Usuário:A entidade foi definida para ser uma especialização por disjunção parcial.Escolheu-se tal abordagem devido ao escopo simples do projeto.Além disso,há a possibilidade de um usuário não ser nem `Cliente` e nem `Instrutor`.
 
 ### Academia:O Smart-Fit-DB representa um sistema capaz de gerenciar múltiplas unidades,cada uma com seus próprios atributos.
 
 ### Equipamento:O Smart-Fit-DB permite armazenar dados referentes aos equipamentos utilizados por cada academia.Todo equipamento só pertence a uma única academia devido à FK.Além disso,cada equipamento registrado pode ser usado em um determinado plano de exercícios.
 
-### Fatura_Mensal:O Smart-Fit-DB é um sistema que simula transações financeiras.Devido a todo cliente se matricular e assinar um plano,é necessário que haja uma entidade que represente essas transações:cada matrícula e assinatura são mensais e precisam ser representadas como faturas.
+### Fatura_Mensal:O Smart-Fit-DB é um sistema que simula transações financeiras.Devido aos clientes assinarem planos de assinatura,é necessário que haja uma entidade que represente essas transações,pois as assinaturas são mensais e precisam estar representadas como faturas.
 
-### Turma:No Smart-Fit-DB múltiplos clientes podem estar em múltiplas turmas,e cada turma só pode ter um único instrutor.Essa decisão foi tomada pois a entidade `Turma` no DER possuí a FK de `Instrutor`,mas não de `Cliente`.
+### Turma:No Smart-Fit-DB cada turma só pode ter um único instrutor devido a especialidade do mesmo e também devido a modalidade de exercícios a qual ela irá seguir.
 
-### Plano_Assinatura:Decidiu-se transformá-lo em uma entidade fraca para que cada plano seja único para cada cliente.
+### Plano_Assinatura:No Smart-Fit-DB cada plano de assinatura é único para cada cliente.
 
 # Migrações
 
@@ -241,7 +245,7 @@ ALTER TABLE Pagamento ADD CONSTRAINT Check_Valor_Pagamento CHECK (Valor_Total > 
 
 ```
 
-#### Esta migração adiciona restrições a fim de evitar possíveis erros de inserções.
+#### Esta migração adiciona constraints a fim de evitar possíveis erros de inserções.
 
 ### Sexta Migração
 
@@ -282,7 +286,11 @@ ALTER TABLE Turma RENAME COLUMN Turno TO Turno_Turma;
 
 ````
 
-### Esta migração corresponde à quarta modelagem.Ela adiciona o atributo `Academia_ID` à tabela `Equipamento`,a fim de seguir o relacionamento **1:N**,e remove o atributo `Turma_ID` da tabela `Cliente` para que possa seguir a cardinalidade do relacionamento.Além disso,ela renomeia o atributo `Turno_Turma` da tabela `Turma`.
+### Esta migração corresponde à quarta modelagem.
+
+### Ela adiciona o atributo `Academia_ID` à tabela `Equipamento`,a fim de seguir o relacionamento **1:N**,e remove o atributo `Turma_ID` da tabela `Cliente` para que possa seguir a cardinalidade do relacionamento.
+
+### Além disso,ela renomeia o atributo `Turno_Turma` da tabela `Turma`.
 
 ### Nona Migração
 
@@ -340,7 +348,7 @@ ALTER TABLE Academia DROP COLUMN Unidade_Federativa_Academia;
 
 ### Removeu-se `Matricula_ID` pois `Fatura_Mensal` é gerada por `Plano_Assinatura`.Além disso,o plano de assinatura é gerado por um cliente.
 
-### Em relação a `Unidade_Federativa_Academia`,ela foi removida devido ao escopo do projeto ter sido mudado para representar somentes as unidades de Belém do Pará.
+### Em relação a `Unidade_Federativa_Academia`,ela foi removida devido ao escopo do projeto ter sido alterado para representar somentes as unidades de Belém do Pará.
 
 ### Décima Segunda Migração
 
@@ -358,7 +366,7 @@ ALTER TABLE Plano_Assinatura ADD COLUMN Cliente_ID VARCHAR(11) REFERENCES Client
 
 ### Adicinou-se `Cliente_ID` ao `Plano_Assinatura` pois ele depende (diretamente) de um cliente e não de uma matrícula.
 
-# Métodos de Funcionamento
+# Métodos de Rodar o Projeto
 
 ## DB Fiddle
 
