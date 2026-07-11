@@ -28,7 +28,7 @@
 
 ### Todas as evoluções foram feitas para tornar o sistema mais fiél e otimizado possível.
 
-### Os DERs encontram-se no diretório `Modelagens`.
+### Cada diagrama e sua explicação se encontra no diretório `Modelagens`.
 
 ## Entidades
 
@@ -371,6 +371,24 @@ ALTER TABLE Plano_Assinatura ADD COLUMN Cliente_ID VARCHAR(11) REFERENCES Client
 ### Adiciona-se `Equipamento_ID` pois percebeu-se que um plano de exercícios precisa de um equipamento.
 
 ### Adiciona-se `Cliente_ID` ao `Plano_Assinatura` pois ele depende de um cliente e não de uma matrícula.
+
+### Décima Terceira Migração
+
+``` SQL
+ALTER TABLE Plano_Assinatura ADD COLUMN Academia_ID VARCHAR(14) REFERENCES Academia(CNPJ) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE Matricula ADD COLUMN Academia_ID VARCHAR(14) REFERENCES Academia(CNPJ) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+ALTER TABLE Plano_Exercicios ADD COLUMN Academia_ID VARCHAR(14) REFERENCES Academia(CNPJ) ON DELETE RESTRICT ON UPDATE CASCADE;
+```
+
+### Esta migração corresponde à sétima modelagem
+
+### Adiciona-se `Academia_ID` a `Plano_Assinatura` para sermos capazes de analisar os planos que cada uma oferece.
+
+### Adiciona-se `Academia_ID` a `Matricula` para sermos capazes de analisar matrículas de uma determinada academia.
+
+### Adiciona-se `Academia_ID` a `Plano_Exercicios` para sermos capazes de analisar as modalidades que cada uma oferece.
 
 # Método de Rodar o Projeto
 
