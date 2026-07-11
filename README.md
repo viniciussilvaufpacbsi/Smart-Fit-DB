@@ -398,5 +398,5 @@ ALTER TABLE Plano_Assinatura ADD COLUMN Cliente_ID VARCHAR(11) REFERENCES Client
 
 ## 12.Insira-o no espaço **Query SQL** do `DB Fiddle`
 
-### 13.Aperte `Run`
+## 13.Aperte `Run`
 
