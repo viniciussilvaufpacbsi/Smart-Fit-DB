@@ -110,3 +110,20 @@
 
 #### 2.Equipamento_ID em Plano_Exercicios
 
+## Smart-Fit_DB-7
+
+### Alterações
+
+#### 1.Estabelece um relacionamento `1:N` entre `Academia` e `Plano_Exercicios`
+
+#### 2.Estabelece um relacionamento `1:N` entre `Academia` e `Plano_Assinatura`
+
+### Adições
+
+#### 1.`Academia_ID` em `Plano_Assinatura`
+
+#### 2.Academia_ID` em `Plano_Exercicios`
+
+#### 3.Academia_ID` em `Matricula`
+
+
