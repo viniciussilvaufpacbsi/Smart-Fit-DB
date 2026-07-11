@@ -34,9 +34,9 @@
 
 ### Academia:Entidade forte que representa uma franqueado composto de atributos como `CNPJ,Nome_Academia,Cidade_Academia,Bairro_Academia` e `Rua_Academia`.
 
-### Equipamento:Entidade forte que pertence a uma academia.Ele é composto por atributos como `Nome_Equipamento,Tipo_Equipamento,Condicao_Equipamento`,`Valor_Equipamento` e `Academia_ID`.
+### Equipamento:Entidade forte que pertence a uma academia.Ele é composto por atributos como `Nome_Equipamento,Tipo_Equipamento,Condicao_Equipamento,Valor_Equipamento` e `Academia_ID`.
 
-### Usuario:Entidade fraca dependente de `Academia` composta de atributos como `Nome_Usuario,Senha_Usuario,Data_Cadastro` e `Academia_ID.Ele é uma abstração para `Cliente` e `Instrutor`.
+### Usuario:Entidade fraca dependente de `Academia` composta de atributos como `Nome_Usuario,Senha_Usuario,Data_Cadastro` e `Academia_ID`.Ele é uma abstração para `Cliente` e `Instrutor`.
 
 ### Cliente:Especialização de `Usuario` composta de atributos como `CPF_Cliente`,`Telefone_Contato` e `Usuario_ID`.
 
@@ -48,7 +48,7 @@
 
 ### Matricula:Entidade fraca dependente de `Cliente`.Ela é composta de atributos como `ID_Matricula,Cliente_ID` e `Data_Matricula`.
 
-### Plano_Assinatura:Entidade fraca dependente de `Cliente`.Ele é composto de atributos como `ID_Plano,Nome_Plano, `Valor_Plano` e `Cliente_ID`.
+### Plano_Assinatura:Entidade fraca dependente de `Cliente`.Ele é composto de atributos como `ID_Plano,Nome_Plano,Valor_Plano` e `Cliente_ID`.
 
 ### Fatura_Mensal:Entidade fraca dependente de `Plano_Assinatura` e `Cliente`.Ela é composta de atributos como `ID_Fatura,Valor_Fatura,Data_Fechamento,Data_Vencimento,Cliente_ID` e `Plano_ID`.Ela é gerada por um `Plano_Assinatura`.
 
@@ -378,13 +378,11 @@ ALTER TABLE Plano_Assinatura ADD COLUMN Cliente_ID VARCHAR(11) REFERENCES Client
 
 ## 2.Selecione PostgreSQL
 
-## 3.Copie o schema inicial
+## 3.Vá em `Projeto Completo`
 
-## 4.Copie as migrações
+## 4.Copie o código do arquivo `smart-fit_complete-schema.sql`
 
-### 5.Copie os DMLs
+### 5.Copie o código do arquivo `smart-fit_complete-data.sql`
 
-### 6.Elabore consultas
-
-### 7.Aperte "Run"
+### 6.Aperte `Run`
 
