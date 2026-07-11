@@ -374,15 +374,29 @@ ALTER TABLE Plano_Assinatura ADD COLUMN Cliente_ID VARCHAR(11) REFERENCES Client
 
 # Método de Rodar o Projeto
 
-## 1.Abra o DB Fiddle
+## 1.Vá em [DB Fiddle](https://www.db-fiddle.com/)   
 
-## 2.Selecione PostgreSQL
+## 2.Selecione a versão mais recente do `PostgreSQL`
 
-## 3.Vá em `Projeto Completo`
+## 3.Retorne ao repositório `Smart-Fit-DB`
 
-## 4.Copie o código do arquivo `smart-fit_complete-schema.sql`
+## 4.Vá em `Projeto Completo`
 
-### 5.Copie o código do arquivo `smart-fit_complete-data.sql`
+## 5.Copie o código do arquivo `smart-fit_complete-schema.sql`
 
-### 6.Aperte `Run`
+## 6.Copie o código do arquivo `smart-fit_complete-data.sql`
+
+## 7.Insira-os no espaço **Schema SQL** do `DB Fiddle`
+
+## 8.Retorne novamente ao repositório `Smart-Fit-DB`
+
+## 9.Vá em `Consultas`
+
+## 10.Copie o código do arquivo `smart-fit_queries.sql`
+
+## 11.Retorne ao `DB Fiddle`
+
+## 12.Insira-o no espaço **Query SQL** do `DB Fiddle`
+
+### 13.Aperte `Run`
 
